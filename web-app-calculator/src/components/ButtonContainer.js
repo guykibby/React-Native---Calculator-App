@@ -45,6 +45,7 @@ export default function ButtonContainer({ onButton, onClear }) {
             size="large"
             aria-label="outlined primary button group"
           >
+            {/* The 0 and . button needs to switch places for consistency with normal convensions */}
             <Button onClick={() => onButton("0")}>0</Button>
             <Button onClick={() => onButton(".")}>.</Button>
             <Button color="info" onClick={() => onButton("=")}>
