@@ -108,7 +108,6 @@ export default function App() {
     } else if (firstOperand) {
       setFirstOperand(firstOperand.slice(0, -1));
     }
-    console.log("delete clicked");
   };
 
   const isOperator = (char) => {
@@ -151,7 +150,18 @@ export default function App() {
   // It also possibly needs to execute a function to record the calculation in history, and update local storage.
   // It is unclear to me why we would want to clear the states straight after calculating the result, perhaps it should be removed from this function and executed elsewhere.
   const calculateResult = () => {
-    setResult(Number(firstOperand) + Number(secondOperand));
+    if (operator === "+") {
+      setResult(Number(firstOperand) + Number(secondOperand));
+    }
+    if (operator === "-") {
+      setResult(Number(firstOperand) - Number(secondOperand));
+    }
+    if (operator === "*") {
+      setResult(Number(firstOperand) * Number(secondOperand));
+    }
+    if (operator === "/") {
+      setResult(Number(firstOperand) / Number(secondOperand));
+    }
   };
 
   useEffect(() => {
