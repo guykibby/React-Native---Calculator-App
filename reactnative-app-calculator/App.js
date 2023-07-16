@@ -17,18 +17,27 @@ export default function App() {
 
   // There is no code to round the result to 2 decimal places.
 
-  // . + . = NaN
-  // There is no code to handle the case where the user inputs a decimal point without any numbers before or after it.
-  // There is no code to handle the case where the user inputs a decimal point without any numbers after it.
-  // There is no code to handle the case where the user inputs a decimal point without any numbers before it.
-  // There is no code to handle the case where the user inputs multiple decimal points.
-
   // ?The calculator can not display negative results, or is it only becuase of + operation?
 
   // Button Clicked needs to limit size of number inputs.
   // calculateResult needs to handle extremelely large numbers.
 
   // Tests are not implemented.
+  // const testInputs = [
+  //   "",
+  //   ".",
+  //   "0.0",
+  //   "0...",
+  //   ".0",
+  //   "0.",
+  //   "12345.",
+  //   "111/",
+  //   "=",
+  //   "/",
+  //   "+",
+  //   "-",
+  //   "*",
+  // ];
 
   // UX Considerations:
   // Whenever you click a button you should see a feedback animation
@@ -36,13 +45,6 @@ export default function App() {
   // The clear history button should be displayed after the input results display area
   // The calculator should be responsive to different screen sizes
   // The calculator should be accessible to screen readers
-
-  // buttonClicked function needs to be able to handle the following:
-  // 1. If "=" is pushed before all operands or operators are input, it should do nothing.
-  // 2. If an operator is pushed before the first operand is input, it should do nothing.
-  // 3. If an operator is pushed after the first operand is input, it should set the operator state.
-  // 4. If an operator is pushed after the second operand is input, it should do nothing.
-  // 5. After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
 
   const buttonClicked = (char) => {
     if (result) {
@@ -90,31 +92,6 @@ export default function App() {
         }
       }
     }
-    // if (firstOperand && operator && secondOperand) {
-
-    // const testNum = [
-    //   "",
-    //   ".",
-    //   "0.0",
-    //   "0...",
-    //   ".0",
-    //   "0.",
-    //   "12345.",
-    //   "111/",
-    //   "=",
-    //   "/",
-    //   "+",
-    //   "-",
-    //   "*",
-    // ];
-    // testNum.forEach((num) => {
-    //   console.log(num);
-    //   console.log(isNumber(num));
-    // });
-
-    // console.log(Number(".") + Number("."));
-    // console.log(Number("0.") + Number("0."));
-    // console.log(isNumber(firstOperand));
   };
 
   const deleteClicked = () => {
@@ -139,13 +116,12 @@ export default function App() {
   };
 
   const isNumber = (str) => {
-    // return isFinite(str);
     return +str === +str;
   };
 
-  // Currently the clearStates function is not working properly.
-  // ClearStates needs to clear the result, firstOperand, secondOperand, and operator.
+  // ClearStates function requires:
   // It also possibly needs to execute a function to record the calculation in history, and update local storage, if calculateResult is not doing that already.
+  // After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
   const clearStates = (char) => {
     if (char !== "=") {
       if (isNumber(char)) {
