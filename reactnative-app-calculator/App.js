@@ -40,19 +40,92 @@ export default function App() {
   // 3. If an operator is pushed after the first operand is input, it should set the operator state.
   // 4. If an operator is pushed after the second operand is input, it should do nothing.
   // 5. After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
+
   const buttonClicked = (char) => {
-    if (isFirstOperand(char)) {
-      setFirstOperand((previousValue) => previousValue + char);
-    } else if (isSecondOperand(char)) {
-      // This function is not an intiutive place to execute the calculateResult function.
-      if (char === "=") {
-        calculateResult();
-      } else {
+    if (!firstOperand) {
+      if (isNumber(char)) {
+        setFirstOperand(char);
+      }
+      if (char === ".") {
+        setFirstOperand("0.");
+      }
+    }
+
+    if (firstOperand && !operator) {
+      if (isNumber(char)) {
+        setFirstOperand((previousValue) => previousValue + char);
+      }
+      if (isOperator(char)) {
+        setOperator(char);
+      }
+      if (char === "." && !firstOperand.includes(".")) {
+        setFirstOperand((previousValue) => previousValue + char);
+      }
+    }
+
+    if (firstOperand && operator && !secondOperand) {
+      if (isNumber(char)) {
+        setSecondOperand(char);
+      }
+      if (char === ".") {
+        setSecondOperand("0.");
+      }
+    }
+
+    if (firstOperand && operator && secondOperand) {
+      if (isNumber(char)) {
         setSecondOperand((previousValue) => previousValue + char);
       }
-    } else {
-      setOperator(char);
+      if (char === "." && !secondOperand.includes(".")) {
+        setSecondOperand((previousValue) => previousValue + char);
+      }
+      if (char === "=") {
+        calculateResult();
+      }
     }
+
+    // if (firstOperand && operator && secondOperand) {
+
+    // const testNum = [
+    //   "",
+    //   ".",
+    //   "0.0",
+    //   "0...",
+    //   ".0",
+    //   "0.",
+    //   "12345.",
+    //   "111/",
+    //   "=",
+    //   "/",
+    //   "+",
+    //   "-",
+    //   "*",
+    // ];
+    // testNum.forEach((num) => {
+    //   console.log(num);
+    //   console.log(isNumber(num));
+    // });
+
+    // if (isNoOperand()) {
+    //   if (!(char === "=" || isOperator(char))) {
+    //     setFirstOperand(char);
+    //   }
+    // }
+    // if (isFirstOperand(char)) {
+    //   setFirstOperand((previousValue) => previousValue + char);
+    // } else if (isSecondOperand(char)) {
+    //   // This function is not an intiutive place to execute the calculateResult function.
+    //   if (char === "=") {
+    //     calculateResult();
+    //   } else {
+    //     setSecondOperand((previousValue) => previousValue + char);
+    //   }
+    // } else {
+    //   setOperator(char);
+    // }
+
+    console.log(Number("0.") + Number("0."));
+    // console.log(isNumber(firstOperand));
   };
 
   const deleteClicked = () => {
@@ -62,16 +135,26 @@ export default function App() {
     // consider this edge case: User changing their mind on which operator they wanted to use.
     console.log("delete clicked");
   };
+
+  const isOperator = (char) => {
+    return char === "+" || char === "-" || char === "*" || char === "/";
+  };
+
+  const isNumber = (str) => {
+    // return isFinite(str);
+    return +str === +str;
+  };
+
+  const isNoOperand = () => {
+    return !firstOperand;
+  };
+
   const isFirstOperand = (char) => {
-    return !operator && !isOperator(char);
+    return !operator;
   };
 
   const isSecondOperand = (char) => {
     return operator && !isOperator(char);
-  };
-
-  const isOperator = (char) => {
-    return char === "+" || char === "-" || char === "*" || char === "/";
   };
 
   // Currently the clearStates function is not working properly.
