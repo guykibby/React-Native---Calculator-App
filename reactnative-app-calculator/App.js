@@ -12,12 +12,6 @@ export default function App() {
   const [result, setResult] = useState("");
   const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
 
-  // There is currently no function to handle delete button clicks.
-  // The delete button should clear the most recent input
-  // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
-  // But the cleared calculation should still be saved to history
-  // consider this edge case: User changing their mind on which operator they wanted to use.
-
   // There is currently no function to store history in local storage.
   // The clear history button should clear the history from local storage.
 
@@ -50,7 +44,7 @@ export default function App() {
     if (isFirstOperand(char)) {
       setFirstOperand((previousValue) => previousValue + char);
     } else if (isSecondOperand(char)) {
-      // This functional is not an intiutive place to execute the calculateResult function.
+      // This function is not an intiutive place to execute the calculateResult function.
       if (char === "=") {
         calculateResult();
       } else {
@@ -61,6 +55,13 @@ export default function App() {
     }
   };
 
+  const deleteClicked = () => {
+    // This function should delete the most recent input.
+    // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
+    // But the cleared calculation should still be saved to history
+    // consider this edge case: User changing their mind on which operator they wanted to use.
+    console.log("delete clicked");
+  };
   const isFirstOperand = (char) => {
     return !operator && !isOperator(char);
   };
@@ -97,8 +98,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
+      {/* ? The onClear function should be given to the Operation Display */}
       <ButtonContainer
         onButton={buttonClicked}
+        onDelete={deleteClicked}
         onClear={() => setHistory([])}
       />
       <OperationDisplay d={operationDisplay} h={history} />
