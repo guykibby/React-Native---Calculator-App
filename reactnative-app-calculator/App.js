@@ -25,6 +25,9 @@ export default function App() {
 
   // ?The calculator can not display negative results, or is it only becuase of + operation?
 
+  // Button Clicked needs to limit size of number inputs.
+  // calculateResult needs to handle extremelely large numbers.
+
   // Tests are not implemented.
 
   // UX Considerations:
@@ -119,7 +122,15 @@ export default function App() {
     // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
     // But the cleared calculation should still be saved to history
     // consider this edge case: User changing their mind on which operator they wanted to use.
-    clearStates();
+    if (result) {
+      clearStates();
+    } else if (secondOperand) {
+      setSecondOperand(secondOperand.slice(0, -1));
+    } else if (operator) {
+      setOperator("");
+    } else if (firstOperand) {
+      setFirstOperand(firstOperand.slice(0, -1));
+    }
     console.log("delete clicked");
   };
 
@@ -131,14 +142,6 @@ export default function App() {
     // return isFinite(str);
     return +str === +str;
   };
-
-  // const isFirstOperand = (char) => {
-  //   return !operator;
-  // };
-
-  // const isSecondOperand = (char) => {
-  //   return operator && !isOperator(char);
-  // };
 
   // Currently the clearStates function is not working properly.
   // ClearStates needs to clear the result, firstOperand, secondOperand, and operator.
@@ -155,6 +158,10 @@ export default function App() {
       }
       if (char === ".") {
         setFirstOperand("0.");
+        setOperator("");
+      }
+      if (!char) {
+        setFirstOperand("");
         setOperator("");
       }
       setSecondOperand("");
@@ -186,6 +193,8 @@ export default function App() {
         onDelete={deleteClicked}
         onClear={() => setHistory([])}
       />
+
+      {/* The variable names d and h are not semantically intuitive*/}
       <OperationDisplay d={operationDisplay} h={history} />
     </View>
   );

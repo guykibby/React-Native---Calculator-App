@@ -50,6 +50,9 @@ function App() {
   // There is no code to handle the case where the user inputs a decimal point without any numbers before it.
   // There is no code to handle the case where the user inputs multiple decimal points.
 
+  // Button Clicked needs to limit size of number inputs.
+  // calculateResult needs to handle extremelely large numbers.
+
   // ?The calculator can not display negative results, or is it only becuase of + operation?
 
   // Tests are not implemented.
@@ -123,6 +126,7 @@ function App() {
           // the clear history button should be in the OperationDisplay component.
           onClear={() => setHistory([])}
         ></ButtonContainer>
+        {/* The variable names d and h are not semantically intuitive*/}
         <OperationDisplay d={operationDisplay} h={history}></OperationDisplay>
       </div>
     </ThemeProvider>
