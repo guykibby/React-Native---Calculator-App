@@ -150,17 +150,28 @@ export default function App() {
   // It also possibly needs to execute a function to record the calculation in history, and update local storage.
   // It is unclear to me why we would want to clear the states straight after calculating the result, perhaps it should be removed from this function and executed elsewhere.
   const calculateResult = () => {
+    let tempResult = null;
     if (operator === "+") {
-      setResult(Number(firstOperand) + Number(secondOperand));
+      tempResult = Number(firstOperand) + Number(secondOperand);
     }
     if (operator === "-") {
-      setResult(Number(firstOperand) - Number(secondOperand));
+      tempResult = Number(firstOperand) - Number(secondOperand);
     }
     if (operator === "*") {
-      setResult(Number(firstOperand) * Number(secondOperand));
+      tempResult = Number(firstOperand) * Number(secondOperand);
     }
     if (operator === "/") {
-      setResult(Number(firstOperand) / Number(secondOperand));
+      tempResult = Number(firstOperand) / Number(secondOperand);
+    }
+    if (Number.isInteger(tempResult)) {
+      setResult(tempResult);
+    } else {
+      const roundedResult = tempResult.toFixed(1);
+      if (tempResult.toFixed(1) === tempResult.toString()) {
+        setResult(tempResult);
+      } else {
+        setResult(tempResult.toFixed(2));
+      }
     }
   };
 
