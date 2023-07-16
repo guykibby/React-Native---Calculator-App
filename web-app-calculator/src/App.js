@@ -71,7 +71,7 @@ function App() {
     if (isFirstOperand(char)) {
       setFirstOperand((previousValue) => previousValue + char);
     } else if (isSecondOperand(char)) {
-      // This, whilst functional is not an intiutive place to execute the calculateResult function.
+      // This functional is not an intiutive place to execute the calculateResult function.
       if (char === "=") {
         calculateResult();
       } else {

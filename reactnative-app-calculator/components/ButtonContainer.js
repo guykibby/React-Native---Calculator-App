@@ -1,102 +1,171 @@
-import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import React from "react";
+import { View, StyleSheet, Pressable, Text } from "react-native";
 
 export default function ButtonContainer({ onButton, onClear }) {
   return (
     <>
       <View style={styles.btnContainer}>
         <View style={styles.numericBtnContainer}>
-          <Button
-            title="1"
+          <Pressable
             onPress={() => onButton("1")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="2"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>1</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("2")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="3"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>2</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("3")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="4"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>3</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("4")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="5"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>4</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("5")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="6"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>5</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("6")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="7"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>6</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("7")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="8"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>7</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("8")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="9"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>8</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("9")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="0"
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>9</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("0")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="."
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>0</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton(".")}
-            buttonStyle={styles.button}
-          />
-          <Button
-            title="="
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
+            ]}
+          >
+            <Text style={styles.buttonText}>.</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("=")}
-            buttonStyle={[styles.button, styles.infoButton]}
-          />
+            style={({ pressed }) => [
+              styles.button,
+              styles.infoButton,
+              { backgroundColor: pressed ? "#BA9D9F" : "#FFC0CB" },
+            ]}
+          >
+            <Text style={styles.buttonText}>=</Text>
+          </Pressable>
         </View>
         <View style={styles.operatorBtnContainer}>
-          <Button
-            title="+"
+          <Pressable
             onPress={() => onButton("+")}
-            buttonStyle={[styles.button, styles.secondaryButton]}
-          />
-          <Button
-            title="-"
+            style={({ pressed }) => [
+              styles.button,
+              styles.secondaryButton,
+              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
+            ]}
+          >
+            <Text style={styles.buttonText}>+</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("-")}
-            buttonStyle={[styles.button, styles.secondaryButton]}
-          />
-          <Button
-            title="*"
+            style={({ pressed }) => [
+              styles.button,
+              styles.secondaryButton,
+              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
+            ]}
+          >
+            <Text style={styles.buttonText}>-</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("*")}
-            buttonStyle={[styles.button, styles.secondaryButton]}
-          />
-          <Button
-            title="/"
+            style={({ pressed }) => [
+              styles.button,
+              styles.secondaryButton,
+              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
+            ]}
+          >
+            <Text style={styles.buttonText}>*</Text>
+          </Pressable>
+          <Pressable
             onPress={() => onButton("/")}
-            buttonStyle={[styles.button, styles.secondaryButton]}
-          />
+            style={({ pressed }) => [
+              styles.button,
+              styles.secondaryButton,
+              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
+            ]}
+          >
+            <Text style={styles.buttonText}>/</Text>
+          </Pressable>
         </View>
       </View>
       <View style={styles.calculatorControls}>
-        <Button title="Delete" buttonStyle={styles.warningButton} />
-        <Button
-          title="Clear history"
-          onPress={onClear}
-          buttonStyle={styles.errorButton}
-        />
+        <Pressable style={styles.warningButton}>
+          <Text style={styles.buttonText}>Delete</Text>
+        </Pressable>
+        <Pressable onPress={onClear} style={styles.errorButton}>
+          <Text style={styles.buttonText}>Clear history</Text>
+        </Pressable>
       </View>
     </>
   );
@@ -127,6 +196,13 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     marginVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
   infoButton: {
     backgroundColor: "#BA9D9F",
@@ -137,9 +213,19 @@ const styles = StyleSheet.create({
   warningButton: {
     backgroundColor: "#B6636E",
     marginHorizontal: 10,
+    width: 150,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
   },
   errorButton: {
     backgroundColor: "#9E2A2B",
+    width: 150,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
   },
   calculatorControls: {
     flexDirection: "row",
