@@ -15,10 +15,6 @@ export default function App() {
   // There is currently no function to store history in local storage.
   // The clear history button should clear the history from local storage.
 
-  // There is no code to round the result to 2 decimal places.
-
-  // ?The calculator can not display negative results, or is it only becuase of + operation?
-
   // Button Clicked needs to limit size of number inputs.
   // calculateResult needs to handle extremelely large numbers.
 
@@ -95,10 +91,6 @@ export default function App() {
   };
 
   const deleteClicked = () => {
-    // This function should delete the most recent input.
-    // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
-    // But the cleared calculation should still be saved to history
-    // consider this edge case: User changing their mind on which operator they wanted to use.
     if (result) {
       clearStates();
     } else if (secondOperand) {
@@ -145,10 +137,7 @@ export default function App() {
   };
 
   // Currently the calculateResult function is not working properly. It only adds the two operands together.
-  // CalculateResult requires the firstOperand, secondOperand, and operator.
-  // Then it needs to determine which operator to use and calculate the result.
   // It also possibly needs to execute a function to record the calculation in history, and update local storage.
-  // It is unclear to me why we would want to clear the states straight after calculating the result, perhaps it should be removed from this function and executed elsewhere.
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
@@ -166,7 +155,6 @@ export default function App() {
     if (Number.isInteger(tempResult)) {
       setResult(tempResult);
     } else {
-      const roundedResult = tempResult.toFixed(1);
       if (tempResult.toFixed(1) === tempResult.toString()) {
         setResult(tempResult);
       } else {
