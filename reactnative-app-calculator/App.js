@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
 import OperationDisplay from "./components/OperationDisplay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [operationDisplay, setOperationDisplay] = useState("");
@@ -10,7 +11,38 @@ export default function App() {
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("");
-  const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
+  const [history, setHistory] = useState([]);
+
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("my-key", jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("my-key");
+      console.log(jsonValue);
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getData().then((value) => {
+      if (value) {
+        setHistory(value);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    storeData(history);
+  }, [history]);
 
   // There is currently no function to store history in local storage.
   // The clear history button should clear the history from local storage.
