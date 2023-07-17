@@ -152,15 +152,14 @@ export default function App() {
     if (operator === "/") {
       tempResult = Number(firstOperand) / Number(secondOperand);
     }
-    if (Number.isInteger(tempResult)) {
-      setResult(tempResult);
-    } else {
-      if (tempResult.toFixed(1) === tempResult.toString()) {
-        setResult(tempResult);
-      } else {
-        setResult(tempResult.toFixed(2));
-      }
+    if (!Number.isInteger(tempResult)) {
+      tempResult = Number(tempResult.toFixed(2));
     }
+    setHistory((previousValue) => [
+      ...previousValue,
+      `${firstOperand} ${operator} ${secondOperand} = ${tempResult}`,
+    ]);
+    setResult(tempResult);
   };
 
   useEffect(() => {
