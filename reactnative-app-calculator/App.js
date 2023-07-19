@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
 import OperationDisplay from "./components/OperationDisplay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [operationDisplay, setOperationDisplay] = useState("");
@@ -10,17 +11,40 @@ export default function App() {
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("");
-  const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
+  const [history, setHistory] = useState([]);
 
-  // There is currently no function to store history in local storage.
-  // The clear history button should clear the history from local storage.
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("my-key");
+        console.log(jsonValue);
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (e) {
+        // error reading value
+      }
+    };
+    getData().then((value) => {
+      if (value) {
+        console.log(value);
+        setHistory(value);
+      }
+    });
+  }, []);
 
-  // There is no code to round the result to 2 decimal places.
-
-  // ?The calculator can not display negative results, or is it only becuase of + operation?
+  useEffect(() => {
+    const storeData = async (value) => {
+      try {
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem("my-key", jsonValue);
+      } catch (e) {
+        // saving error
+      }
+    };
+    storeData(history);
+  }, [history]);
 
   // Button Clicked needs to limit size of number inputs.
-  // calculateResult needs to handle extremelely large numbers.
+  // calculateResult needs to handle extremelely large numbers (maybe minimise or throw error).
 
   // Tests are not implemented.
   // const testInputs = [
@@ -95,10 +119,6 @@ export default function App() {
   };
 
   const deleteClicked = () => {
-    // This function should delete the most recent input.
-    // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
-    // But the cleared calculation should still be saved to history
-    // consider this edge case: User changing their mind on which operator they wanted to use.
     if (result) {
       clearStates();
     } else if (secondOperand) {
@@ -108,7 +128,6 @@ export default function App() {
     } else if (firstOperand) {
       setFirstOperand(firstOperand.slice(0, -1));
     }
-    console.log("delete clicked");
   };
 
   const isOperator = (char) => {
@@ -119,9 +138,6 @@ export default function App() {
     return +str === +str;
   };
 
-  // ClearStates function requires:
-  // It also possibly needs to execute a function to record the calculation in history, and update local storage, if calculateResult is not doing that already.
-  // After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
   const clearStates = (char) => {
     if (char !== "=") {
       if (isNumber(char)) {
@@ -145,13 +161,28 @@ export default function App() {
     }
   };
 
-  // Currently the calculateResult function is not working properly. It only adds the two operands together.
-  // CalculateResult requires the firstOperand, secondOperand, and operator.
-  // Then it needs to determine which operator to use and calculate the result.
-  // It also possibly needs to execute a function to record the calculation in history, and update local storage.
-  // It is unclear to me why we would want to clear the states straight after calculating the result, perhaps it should be removed from this function and executed elsewhere.
   const calculateResult = () => {
-    setResult(Number(firstOperand) + Number(secondOperand));
+    let tempResult = null;
+    if (operator === "+") {
+      tempResult = Number(firstOperand) + Number(secondOperand);
+    }
+    if (operator === "-") {
+      tempResult = Number(firstOperand) - Number(secondOperand);
+    }
+    if (operator === "*") {
+      tempResult = Number(firstOperand) * Number(secondOperand);
+    }
+    if (operator === "/") {
+      tempResult = Number(firstOperand) / Number(secondOperand);
+    }
+    if (!Number.isInteger(tempResult)) {
+      tempResult = Number(tempResult.toFixed(2));
+    }
+    setHistory((previousValue) => [
+      ...previousValue,
+      `${firstOperand} ${operator} ${secondOperand} = ${tempResult}`,
+    ]);
+    setResult(tempResult);
   };
 
   useEffect(() => {

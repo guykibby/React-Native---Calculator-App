@@ -107,6 +107,7 @@ function App() {
   // Then it needs to determine which operator to use and calculate the result.
   // It also possibly needs to execute a function to record the calculation in history, and update local storage.
   // It is unclear to me why we would want to clear the states straight after calculating the result, perhaps it should be removed from this function and executed elsewhere.
+  // It needs to round the answer to 2 decimal places.
   const calculateResult = () => {
     setResult(Number(firstOperand) + Number(secondOperand));
     clearStates();
