@@ -13,42 +13,38 @@ export default function App() {
   const [result, setResult] = useState("");
   const [history, setHistory] = useState([]);
 
-  const storeData = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("my-key", jsonValue);
-    } catch (e) {
-      // saving error
-    }
-  };
-
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem("my-key");
-      console.log(jsonValue);
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      // error reading value
-    }
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("my-key");
+        console.log(jsonValue);
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (e) {
+        // error reading value
+      }
+    };
     getData().then((value) => {
       if (value) {
+        console.log(value);
         setHistory(value);
       }
     });
   }, []);
 
   useEffect(() => {
+    const storeData = async (value) => {
+      try {
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem("my-key", jsonValue);
+      } catch (e) {
+        // saving error
+      }
+    };
     storeData(history);
   }, [history]);
 
-  // There is currently no function to store history in local storage.
-  // The clear history button should clear the history from local storage.
-
   // Button Clicked needs to limit size of number inputs.
-  // calculateResult needs to handle extremelely large numbers.
+  // calculateResult needs to handle extremelely large numbers (maybe minimise or throw error).
 
   // Tests are not implemented.
   // const testInputs = [
@@ -142,9 +138,6 @@ export default function App() {
     return +str === +str;
   };
 
-  // ClearStates function requires:
-  // It also possibly needs to execute a function to record the calculation in history, and update local storage, if calculateResult is not doing that already.
-  // After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
   const clearStates = (char) => {
     if (char !== "=") {
       if (isNumber(char)) {
@@ -168,8 +161,6 @@ export default function App() {
     }
   };
 
-  // Currently the calculateResult function is not working properly. It only adds the two operands together.
-  // It also possibly needs to execute a function to record the calculation in history, and update local storage.
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
