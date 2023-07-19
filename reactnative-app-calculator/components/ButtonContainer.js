@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
 
-export default function ButtonContainer({ onButton, onClear }) {
+export default function ButtonContainer({ onButton, onClear, onDelete }) {
   return (
     <>
       <View style={styles.btnContainer}>
@@ -160,7 +160,7 @@ export default function ButtonContainer({ onButton, onClear }) {
         </View>
       </View>
       <View style={styles.calculatorControls}>
-        <Pressable style={styles.warningButton}>
+        <Pressable onPress={onDelete} style={styles.warningButton}>
           <Text style={styles.buttonText}>Delete</Text>
         </Pressable>
         <Pressable onPress={onClear} style={styles.errorButton}>
