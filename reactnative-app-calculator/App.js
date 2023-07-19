@@ -1,37 +1,16 @@
+import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
 import OperationDisplay from "./components/OperationDisplay";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { useEffect, useState } from "react";
-import "./App.css";
 
-function App() {
+export default function App() {
   const [operationDisplay, setOperationDisplay] = useState("");
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("");
-  // the state initiation value for history should draw from the local storage
   const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#DBD8AE",
-      },
-      secondary: {
-        main: "#CA907E",
-      },
-      warning: {
-        main: "#B6636E",
-      },
-      error: {
-        main: "#9E2A2B",
-      },
-      info: {
-        main: "#BA9D9F",
-      },
-    },
-  });
 
   // There is currently no function to handle delete button clicks.
   // The delete button should clear the most recent input
@@ -116,17 +95,19 @@ function App() {
   }, [result, firstOperand, secondOperand, operator]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <ButtonContainer
-          onButton={buttonClicked}
-          // the clear history button should be in the OperationDisplay component.
-          onClear={() => setHistory([])}
-        ></ButtonContainer>
-        <OperationDisplay d={operationDisplay} h={history}></OperationDisplay>
-      </div>
-    </ThemeProvider>
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+      <ButtonContainer
+        onButton={buttonClicked}
+        onClear={() => setHistory([])}
+      />
+      <OperationDisplay d={operationDisplay} h={history} />
+    </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
