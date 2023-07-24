@@ -16,8 +16,7 @@ export default function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const jsonValue = await AsyncStorage.getItem("my-key");
-        console.log(jsonValue);
+        const jsonValue = await AsyncStorage.getItem("pastCalculations");
         return jsonValue != null ? JSON.parse(jsonValue) : null;
       } catch (e) {
         // error reading value
@@ -25,7 +24,6 @@ export default function App() {
     };
     getData().then((value) => {
       if (value) {
-        console.log(value);
         setHistory(value);
       }
     });
@@ -35,7 +33,7 @@ export default function App() {
     const storeData = async (value) => {
       try {
         const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("my-key", jsonValue);
+        await AsyncStorage.setItem("pastCalculations", jsonValue);
       } catch (e) {
         // saving error
       }
@@ -43,34 +41,17 @@ export default function App() {
     storeData(history);
   }, [history]);
 
+  useEffect(() => {
+    setOperationDisplay(
+      `${firstOperand} ${operator} ${secondOperand} = ${result}`
+    );
+  }, [firstOperand, secondOperand, operator, result]);
+
   // Button Clicked needs to limit size of number inputs.
   // calculateResult needs to handle extremelely large numbers (maybe minimise or throw error).
 
-  // Tests are not implemented.
-  // const testInputs = [
-  //   "",
-  //   ".",
-  //   "0.0",
-  //   "0...",
-  //   ".0",
-  //   "0.",
-  //   "12345.",
-  //   "111/",
-  //   "=",
-  //   "/",
-  //   "+",
-  //   "-",
-  //   "*",
-  // ];
-
-  // UX Considerations:
-  // Whenever you click a button you should see a feedback animation
-  // "Thumb zone" is taken into consideration
-  // The clear history button should be displayed after the input results display area
-  // The calculator should be responsive to different screen sizes
-  // The calculator should be accessible to screen readers
-
   const buttonClicked = (char) => {
+    // consider getting rid of else statement
     if (result) {
       clearStates(char);
     } else {
@@ -178,18 +159,14 @@ export default function App() {
     if (!Number.isInteger(tempResult)) {
       tempResult = Number(tempResult.toFixed(2));
     }
+
+    // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
     setHistory((previousValue) => [
       ...previousValue,
       `${firstOperand} ${operator} ${secondOperand} = ${tempResult}`,
     ]);
     setResult(tempResult);
   };
-
-  useEffect(() => {
-    setOperationDisplay(
-      `${firstOperand} ${operator} ${secondOperand} = ${result}`
-    );
-  }, [firstOperand, secondOperand, operator, result]);
 
   return (
     <View style={styles.container}>
@@ -206,6 +183,13 @@ export default function App() {
     </View>
   );
 }
+
+// UX Considerations:
+// Whenever you click a button you should see a feedback animation
+// "Thumb zone" is taken into consideration
+// The clear history button should be displayed after the input results display area
+// The calculator should be responsive to different screen sizes
+// The calculator should be accessible to screen readers
 
 const styles = StyleSheet.create({
   container: {
