@@ -7,6 +7,8 @@ import {
 } from "accordion-collapse-react-native";
 
 const OperationDisplay = ({ d, h }) => {
+  console.log(h);
+  console.log(h.reverse());
   return (
     <View style={styles.container}>
       <Text testID="display" style={styles.display}>

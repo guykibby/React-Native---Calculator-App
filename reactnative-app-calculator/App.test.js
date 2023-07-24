@@ -344,8 +344,52 @@ describe("<App/>", () => {
     expect(screen.queryByTestId("history")).toBeNull();
   });
 
-  //   it("delete button deletes latest input prior to result being calculated", async () => {});
-  //   it("delete button clears display after result is calculated", async () => {});
+  it("delete button deletes latest input prior to result being calculated", async () => {
+    await waitFor(async () => {
+      const app = render(<App />);
+    });
+    const button3 = screen.getByText("3");
+    const buttonPlus = screen.getByText("+");
+    const EqualsArray = screen.queryAllByText("=");
+    const buttonEquals = EqualsArray[0];
+    const buttonDelete = screen.getByText("Delete");
+
+    fireEvent.press(button3);
+    fireEvent.press(buttonPlus);
+    fireEvent.press(button3);
+    fireEvent.press(buttonDelete);
+
+    expect(screen.getByTestId("display").props.children).toBe("3 +  = ");
+
+    fireEvent.press(buttonDelete);
+
+    expect(screen.getByTestId("display").props.children).toBe("3   = ");
+
+    fireEvent.press(buttonDelete);
+
+    expect(screen.getByTestId("display").props.children).toBe("   = ");
+  });
+  it("delete button clears display after result is calculated", async () => {
+    await waitFor(async () => {
+      const app = render(<App />);
+    });
+    const button3 = screen.getByText("3");
+    const buttonPlus = screen.getByText("+");
+    const EqualsArray = screen.queryAllByText("=");
+    const buttonEquals = EqualsArray[0];
+    const buttonDelete = screen.getByText("Delete");
+
+    fireEvent.press(button3);
+    fireEvent.press(buttonPlus);
+    fireEvent.press(button3);
+    fireEvent.press(buttonEquals);
+
+    expect(screen.getByTestId("display").props.children).toBe("3 + 3 = 6");
+
+    fireEvent.press(buttonDelete);
+
+    expect(screen.getByTestId("display").props.children).toBe("   = ");
+  });
   //   it("Once result is calculated operator button clears display and sets result as first operand followed by operator", async () => {});
   //   it("Once result is calculated number button clears display and sets number as first operand", async () => {});
   //   it("Once result is calculated decimal button clears display and sets ' 0.' as first operand", async () => {});
