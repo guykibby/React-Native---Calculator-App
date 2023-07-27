@@ -201,7 +201,7 @@ describe("<App/>", () => {
     fireEvent.press(button3);
     fireEvent.press(button3);
 
-    expect(screen.getByText("3.333   =")).toBeDefined();
+    expect(screen.getByText("3.333")).toBeDefined();
   });
 
   it("can output negative numbers", async () => {
@@ -236,17 +236,17 @@ describe("<App/>", () => {
     fireEvent.press(pastCalculations);
     fireEvent.press(buttonEquals);
 
-    expect(operationDisplay.props.children).toBe("   = ");
+    expect(operationDisplay.props.children).toBe("");
     expect(screen.queryByTestId("history")).toBeNull();
 
     fireEvent.press(button3);
     fireEvent.press(buttonEquals);
-    expect(operationDisplay.props.children).toBe("3   = ");
+    expect(operationDisplay.props.children).toBe("3");
     expect(screen.queryByTestId("history")).toBeNull();
 
     fireEvent.press(buttonMinus);
     fireEvent.press(buttonEquals);
-    expect(operationDisplay.props.children).toBe("3 -  = ");
+    expect(operationDisplay.props.children).toBe("3 -");
     expect(screen.queryByTestId("history")).toBeNull();
 
     fireEvent.press(button3);
@@ -266,18 +266,18 @@ describe("<App/>", () => {
 
     fireEvent.press(buttonMinus);
 
-    expect(operationDisplay.props.children).toBe("   = ");
+    expect(operationDisplay.props.children).toBe("");
 
     fireEvent.press(button3);
-    expect(operationDisplay.props.children).toBe("3   = ");
+    expect(operationDisplay.props.children).toBe("3");
 
     fireEvent.press(buttonMinus);
-    expect(operationDisplay.props.children).toBe("3 -  = ");
+    expect(operationDisplay.props.children).toBe("3 -");
 
     fireEvent.press(button3);
     fireEvent.press(buttonPlus);
 
-    expect(operationDisplay.props.children).toBe("3 - 3 = ");
+    expect(operationDisplay.props.children).toBe("3 - 3");
   });
 
   it("when result is calculated it is added to local storage and displayed in past calculations", async () => {
@@ -359,15 +359,15 @@ describe("<App/>", () => {
     fireEvent.press(button3);
     fireEvent.press(buttonDelete);
 
-    expect(screen.getByTestId("display").props.children).toBe("3 +  = ");
+    expect(screen.getByTestId("display").props.children).toBe("3 +");
 
     fireEvent.press(buttonDelete);
 
-    expect(screen.getByTestId("display").props.children).toBe("3   = ");
+    expect(screen.getByTestId("display").props.children).toBe("3");
 
     fireEvent.press(buttonDelete);
 
-    expect(screen.getByTestId("display").props.children).toBe("   = ");
+    expect(screen.getByTestId("display").props.children).toBe("");
   });
   it("delete button clears display after result is calculated", async () => {
     await waitFor(async () => {
@@ -388,11 +388,63 @@ describe("<App/>", () => {
 
     fireEvent.press(buttonDelete);
 
-    expect(screen.getByTestId("display").props.children).toBe("   = ");
+    expect(screen.getByTestId("display").props.children).toBe("");
   });
-  //   it("Once result is calculated operator button clears display and sets result as first operand followed by operator", async () => {});
-  //   it("Once result is calculated number button clears display and sets number as first operand", async () => {});
-  //   it("Once result is calculated decimal button clears display and sets ' 0.' as first operand", async () => {});
+  it("Once result is calculated operator button clears display and input result as first operand followed by new operator", async () => {
+    await waitFor(async () => {
+      const app = render(<App />);
+    });
+    const button3 = screen.getByText("3");
+    const buttonPlus = screen.getByText("+");
+    const EqualsArray = screen.queryAllByText("=");
+    const buttonEquals = EqualsArray[0];
+
+    fireEvent.press(button3);
+    fireEvent.press(buttonPlus);
+    fireEvent.press(button3);
+    fireEvent.press(buttonEquals);
+    fireEvent.press(buttonPlus);
+
+    expect(screen.getByTestId("display").props.children).toBe("6 +");
+  });
+
+  it("Once result is calculated number button clears display and sets number as first operand", async () => {
+    await waitFor(async () => {
+      const app = render(<App />);
+    });
+    const button3 = screen.getByText("3");
+    const button6 = screen.getByText("6");
+    const buttonPlus = screen.getByText("+");
+    const EqualsArray = screen.queryAllByText("=");
+    const buttonEquals = EqualsArray[0];
+
+    fireEvent.press(button3);
+    fireEvent.press(buttonPlus);
+    fireEvent.press(button3);
+    fireEvent.press(buttonEquals);
+    fireEvent.press(button6);
+
+    expect(screen.getByTestId("display").props.children).toBe("6");
+  });
+
+  it("Once result is calculated decimal button clears display and sets ' 0.' as first operand", async () => {
+    await waitFor(async () => {
+      const app = render(<App />);
+    });
+    const button3 = screen.getByText("3");
+    const buttonDecimal = screen.getByText(".");
+    const buttonPlus = screen.getByText("+");
+    const EqualsArray = screen.queryAllByText("=");
+    const buttonEquals = EqualsArray[0];
+
+    fireEvent.press(button3);
+    fireEvent.press(buttonPlus);
+    fireEvent.press(button3);
+    fireEvent.press(buttonEquals);
+    fireEvent.press(buttonDecimal);
+
+    expect(screen.getByTestId("display").props.children).toBe("0.");
+  });
 
   //   it("calculates Addition, Subtration, Multiplication & Division accurate to 2 decimal places", () => {
   //     // arrange

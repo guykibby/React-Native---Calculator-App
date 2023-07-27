@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Children } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
@@ -19,7 +19,7 @@ export default function App() {
         const jsonValue = await AsyncStorage.getItem("pastCalculations");
         return jsonValue != null ? JSON.parse(jsonValue) : null;
       } catch (e) {
-        // error reading value
+        return;
       }
     };
     getData().then((value) => {
@@ -35,7 +35,7 @@ export default function App() {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem("pastCalculations", jsonValue);
       } catch (e) {
-        // saving error
+        return;
       }
     };
     storeData(history);
@@ -43,7 +43,9 @@ export default function App() {
 
   useEffect(() => {
     setOperationDisplay(
-      `${firstOperand} ${operator} ${secondOperand} = ${result}`
+      `${firstOperand}${operator && " " + operator}${
+        secondOperand && " " + secondOperand
+      }${result && " = " + result}`
     );
   }, [firstOperand, secondOperand, operator, result]);
 
@@ -141,7 +143,7 @@ export default function App() {
       setResult("");
     }
   };
-
+  // 0 x 0 = NaN
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
@@ -160,26 +162,25 @@ export default function App() {
       tempResult = Number(tempResult.toFixed(2));
     }
 
+    // get rid of = until it is required
     // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
     setHistory((previousValue) => [
-      ...previousValue,
       `${firstOperand} ${operator} ${secondOperand} = ${tempResult}`,
+      ...previousValue,
     ]);
-    setResult(tempResult);
+    setResult(tempResult.toString());
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.app}>
       <StatusBar style="auto" />
-      {/* ? The onClear function should be given to the Operation Display */}
+      {/* The variable names d and h are not semantically intuitive*/}
+      <OperationDisplay d={operationDisplay} h={history} />
       <ButtonContainer
         onButton={buttonClicked}
         onDelete={deleteClicked}
         onClear={() => setHistory([])}
       />
-
-      {/* The variable names d and h are not semantically intuitive*/}
-      <OperationDisplay d={operationDisplay} h={history} />
     </View>
   );
 }
@@ -192,7 +193,12 @@ export default function App() {
 // The calculator should be accessible to screen readers
 
 const styles = StyleSheet.create({
-  container: {
+  app: {
+    // backgroundColor: "#000",
+    backgroundColor: "white",
+    paddingHorizontal: "5%",
     flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
