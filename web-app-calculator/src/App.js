@@ -33,7 +33,7 @@ function App() {
     },
   });
 
-  // There is currently no function to handle delete button clicks.
+  // There is currently no function to handle the delete button clicks.
   // The delete button should clear the most recent input
   // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
   // But the cleared calculation should still be saved to history
@@ -67,7 +67,7 @@ function App() {
   // buttonClicked function needs to be able to handle the following:
   // 1. If "=" is pushed before all operands or operators are input, it should do nothing.
   // 2. If an operator is pushed before the first operand is input, it should do nothing.
-  // 3. If an operator is pushed after the first operand is input, it should set the operator state.
+  // 3. If an operator is pushed after the first operand is input, it should set the operator state and move to the second operand.
   // 4. If an operator is pushed after the second operand is input, it should do nothing.
   // 5. After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
   const buttonClicked = (char) => {
@@ -105,15 +105,17 @@ function App() {
   // Currently the calculateResult function is not working properly. It only adds the two operands together.
   // CalculateResult requires the firstOperand, secondOperand, and operator.
   // Then it needs to determine which operator to use and calculate the result.
-  // It also possibly needs to execute a function to record the calculation in history, and update local storage.
+  // It also possibly needs to execute a function to record the calculation in history state, and update local storage.
   // It is unclear to me why we would want to clear the states straight after calculating the result, perhaps it should be removed from this function and executed elsewhere.
   // It needs to round the answer to 2 decimal places.
   const calculateResult = () => {
     setResult(Number(firstOperand) + Number(secondOperand));
     clearStates();
   };
-
+  // This use effect should be below the state decleration for readability
   useEffect(() => {
+    // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
+
     setOperationDisplay(
       `${firstOperand} ${operator} ${secondOperand} = ${result}`
     );

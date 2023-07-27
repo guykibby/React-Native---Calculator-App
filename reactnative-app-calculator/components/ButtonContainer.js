@@ -164,7 +164,7 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
           <Text style={styles.buttonText}>Delete</Text>
         </Pressable>
         <Pressable onPress={onClear} style={styles.errorButton}>
-          <Text style={styles.buttonText}>Clear history</Text>
+          <Text style={styles.buttonText}>Clear History</Text>
         </Pressable>
       </View>
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Children } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
@@ -16,16 +16,14 @@ export default function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const jsonValue = await AsyncStorage.getItem("my-key");
-        console.log(jsonValue);
+        const jsonValue = await AsyncStorage.getItem("pastCalculations");
         return jsonValue != null ? JSON.parse(jsonValue) : null;
       } catch (e) {
-        // error reading value
+        return;
       }
     };
     getData().then((value) => {
       if (value) {
-        console.log(value);
         setHistory(value);
       }
     });
@@ -35,42 +33,27 @@ export default function App() {
     const storeData = async (value) => {
       try {
         const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("my-key", jsonValue);
+        await AsyncStorage.setItem("pastCalculations", jsonValue);
       } catch (e) {
-        // saving error
+        return;
       }
     };
     storeData(history);
   }, [history]);
 
+  useEffect(() => {
+    setOperationDisplay(
+      `${firstOperand}${operator && " " + operator}${
+        secondOperand && " " + secondOperand
+      }${result && " = " + result}`
+    );
+  }, [firstOperand, secondOperand, operator, result]);
+
   // Button Clicked needs to limit size of number inputs.
   // calculateResult needs to handle extremelely large numbers (maybe minimise or throw error).
 
-  // Tests are not implemented.
-  // const testInputs = [
-  //   "",
-  //   ".",
-  //   "0.0",
-  //   "0...",
-  //   ".0",
-  //   "0.",
-  //   "12345.",
-  //   "111/",
-  //   "=",
-  //   "/",
-  //   "+",
-  //   "-",
-  //   "*",
-  // ];
-
-  // UX Considerations:
-  // Whenever you click a button you should see a feedback animation
-  // "Thumb zone" is taken into consideration
-  // The clear history button should be displayed after the input results display area
-  // The calculator should be responsive to different screen sizes
-  // The calculator should be accessible to screen readers
-
   const buttonClicked = (char) => {
+    // consider getting rid of else statement
     if (result) {
       clearStates(char);
     } else {
@@ -160,7 +143,7 @@ export default function App() {
       setResult("");
     }
   };
-
+  // 0 x 0 = NaN
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
@@ -178,37 +161,44 @@ export default function App() {
     if (!Number.isInteger(tempResult)) {
       tempResult = Number(tempResult.toFixed(2));
     }
+
+    // get rid of = until it is required
+    // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
     setHistory((previousValue) => [
-      ...previousValue,
       `${firstOperand} ${operator} ${secondOperand} = ${tempResult}`,
+      ...previousValue,
     ]);
-    setResult(tempResult);
+    setResult(tempResult.toString());
   };
 
-  useEffect(() => {
-    setOperationDisplay(
-      `${firstOperand} ${operator} ${secondOperand} = ${result}`
-    );
-  }, [firstOperand, secondOperand, operator, result]);
-
   return (
-    <View style={styles.container}>
+    <View style={styles.app}>
       <StatusBar style="auto" />
-      {/* ? The onClear function should be given to the Operation Display */}
+      {/* The variable names d and h are not semantically intuitive*/}
+      <OperationDisplay d={operationDisplay} h={history} />
       <ButtonContainer
         onButton={buttonClicked}
         onDelete={deleteClicked}
         onClear={() => setHistory([])}
       />
-
-      {/* The variable names d and h are not semantically intuitive*/}
-      <OperationDisplay d={operationDisplay} h={history} />
     </View>
   );
 }
 
+// UX Considerations:
+// Whenever you click a button you should see a feedback animation
+// "Thumb zone" is taken into consideration
+// The clear history button should be displayed after the input results display area
+// The calculator should be responsive to different screen sizes
+// The calculator should be accessible to screen readers
+
 const styles = StyleSheet.create({
-  container: {
+  app: {
+    // backgroundColor: "#000",
+    backgroundColor: "white",
+    paddingHorizontal: "5%",
     flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });

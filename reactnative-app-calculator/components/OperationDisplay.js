@@ -7,9 +7,13 @@ import {
 } from "accordion-collapse-react-native";
 
 const OperationDisplay = ({ d, h }) => {
+  console.log(h);
+  console.log(h.reverse());
   return (
     <View style={styles.container}>
-      <Text style={styles.display}>{d}</Text>
+      <Text testID="display" style={styles.display}>
+        {d}
+      </Text>
       <Collapse>
         <CollapseHeader>
           <View>
@@ -18,7 +22,11 @@ const OperationDisplay = ({ d, h }) => {
         </CollapseHeader>
         <CollapseBody>
           {h.map((item, index) => {
-            return <Text key={index}>{item}</Text>;
+            return (
+              <Text testID="history" key={index}>
+                {item}
+              </Text>
+            );
           })}
         </CollapseBody>
       </Collapse>
@@ -30,8 +38,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
+    alignItems: "center",
+    justifyContent: "flex-start",
     padding: 20,
   },
   history: {
