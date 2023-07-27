@@ -195,10 +195,10 @@ export default function App() {
 const styles = StyleSheet.create({
   app: {
     // backgroundColor: "#000",
-    backgroundColor: "white",
-    paddingHorizontal: "5%",
+    backgroundColor: "green",
+    // paddingHorizontal: "5%",
     flex: 1,
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignItems: "center",
   },
 });

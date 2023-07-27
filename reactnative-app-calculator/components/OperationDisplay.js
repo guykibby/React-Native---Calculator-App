@@ -8,48 +8,55 @@ import {
 
 const OperationDisplay = ({ d, h }) => {
   console.log(h);
-  console.log(h.reverse());
   return (
-    <View style={styles.container}>
+    <View style={styles.window}>
+      <View style={styles.history}>
+        <Collapse>
+          <CollapseHeader>
+            <View>
+              <Text>Past Calculations</Text>
+            </View>
+          </CollapseHeader>
+          <CollapseBody>
+            {h.map((item, index) => {
+              return (
+                <Text testID="history" key={index}>
+                  {item}
+                </Text>
+              );
+            })}
+          </CollapseBody>
+        </Collapse>
+      </View>
       <Text testID="display" style={styles.display}>
         {d}
       </Text>
-      <Collapse>
-        <CollapseHeader>
-          <View>
-            <Text>Past Calculations</Text>
-          </View>
-        </CollapseHeader>
-        <CollapseBody>
-          {h.map((item, index) => {
-            return (
-              <Text testID="history" key={index}>
-                {item}
-              </Text>
-            );
-          })}
-        </CollapseBody>
-      </Collapse>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  window: {
+    backgroundColor: "blue",
+    width: "88%",
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "flex-start",
-    padding: 20,
+    // justifyContent: "flex-start",
+    // padding: 20,
   },
   history: {
-    fontSize: 20,
-    color: "#888",
-    marginBottom: 10,
+    flex: 1,
+    width: "100%",
+    backgroundColor: "yellow",
+    borderRadius: 10,
+    alignItems: "center",
   },
   display: {
     fontSize: 40,
-    color: "#333",
+    height: "30%",
+    width: "100%",
+    backgroundColor: "pink",
+    borderRadius: 10,
   },
 });
 

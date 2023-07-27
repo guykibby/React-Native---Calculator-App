@@ -1,171 +1,119 @@
 import React from "react";
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 
 export default function ButtonContainer({ onButton, onClear, onDelete }) {
   return (
     <>
       <View style={styles.btnContainer}>
-        <View style={styles.numericBtnContainer}>
-          <Pressable
-            onPress={() => onButton("1")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
+        <View style={styles.leftColumn}>
+          <TouchableOpacity
+            onPress={onClear}
+            style={[styles.buttonLeftCol, styles.clear]}
           >
-            <Text style={styles.buttonText}>1</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("2")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
+            <Text style={styles.buttonText}>Clear History</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onDelete}
+            style={[styles.buttonLeftCol, styles.delete]}
           >
-            <Text style={styles.buttonText}>2</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("3")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>3</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("4")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>4</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("5")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>5</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("6")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>6</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("7")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>7</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("8")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>8</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("9")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>9</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("0")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>0</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton(".")}
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: pressed ? "#FF6347" : "#FF0000" },
-            ]}
-          >
-            <Text style={styles.buttonText}>.</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("=")}
-            style={({ pressed }) => [
-              styles.button,
-              styles.infoButton,
-              { backgroundColor: pressed ? "#BA9D9F" : "#FFC0CB" },
-            ]}
-          >
-            <Text style={styles.buttonText}>=</Text>
-          </Pressable>
-        </View>
-        <View style={styles.operatorBtnContainer}>
-          <Pressable
-            onPress={() => onButton("+")}
-            style={({ pressed }) => [
-              styles.button,
-              styles.secondaryButton,
-              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
-            ]}
-          >
-            <Text style={styles.buttonText}>+</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("-")}
-            style={({ pressed }) => [
-              styles.button,
-              styles.secondaryButton,
-              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
-            ]}
-          >
-            <Text style={styles.buttonText}>-</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => onButton("*")}
-            style={({ pressed }) => [
-              styles.button,
-              styles.secondaryButton,
-              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
-            ]}
-          >
-            <Text style={styles.buttonText}>*</Text>
-          </Pressable>
-          <Pressable
+            <Text style={styles.buttonText}>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => onButton("/")}
-            style={({ pressed }) => [
-              styles.button,
-              styles.secondaryButton,
-              { backgroundColor: pressed ? "#CA907E" : "#FFA07A" },
-            ]}
+            style={[styles.buttonLeftCol, styles.operator]}
           >
             <Text style={styles.buttonText}>/</Text>
-          </Pressable>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("1")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("2")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("3")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("4")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>4</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("5")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>5</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("6")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>6</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("7")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>7</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("8")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>8</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("9")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>9</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => onButton("0")} style={styles.zero}>
+            <Text style={styles.buttonText}>0</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton(".")}
+            style={styles.buttonLeftCol}
+          >
+            <Text style={styles.buttonText}>.</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.calculatorControls}>
-        <Pressable onPress={onDelete} style={styles.warningButton}>
-          <Text style={styles.buttonText}>Delete</Text>
-        </Pressable>
-        <Pressable onPress={onClear} style={styles.errorButton}>
-          <Text style={styles.buttonText}>Clear History</Text>
-        </Pressable>
+        <View style={styles.rightColumn}>
+          <TouchableOpacity
+            onPress={() => onButton("+")}
+            style={[styles.buttonRightCol, styles.operator]}
+          >
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("-")}
+            style={[styles.buttonRightCol, styles.operator]}
+          >
+            <Text style={styles.buttonText}>-</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("*")}
+            style={[styles.buttonRightCol, styles.operator]}
+          >
+            <Text style={styles.buttonText}>*</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onButton("=")}
+            style={styles.equalsButton}
+          >
+            <Text style={styles.buttonText}>=</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
@@ -173,63 +121,62 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
 
 const styles = StyleSheet.create({
   btnContainer: {
+    backgroundColor: "#3EC70B",
+    aspectRatio: 1 / 1.25,
+    width: "88%",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 10,
   },
-  numericBtnContainer: {
+  leftColumn: {
+    backgroundColor: "#EE5007",
+    width: "75%",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     flexWrap: "wrap",
-    width: "70%",
+    justifyContent: "space-around",
+    alignContent: "space-around",
   },
-  operatorBtnContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
+  rightColumn: {
+    backgroundColor: "#219F94",
+    width: "25%",
+    justifyContent: "space-around",
     alignItems: "center",
-    width: "30%",
   },
-  button: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
+  buttonLeftCol: {
+    height: "17%",
+    width: "28.3%",
+    backgroundColor: "orange",
+    borderRadius: 10,
+  },
+  buttonRightCol: {
+    height: "17%",
+    width: "85%",
+    backgroundColor: "#FBCB0A",
+    borderRadius: 10,
+  },
+
+  clear: {
+    backgroundColor: "red",
+  },
+  delete: {
+    backgroundColor: "yellow",
+  },
+  operator: {
+    backgroundColor: "#3EC70B",
+  },
+  zero: {
+    height: "17%",
+    width: "61.6%",
+    backgroundColor: "#219F94",
+    borderRadius: 10,
+  },
+  equalsButton: {
+    height: "37%",
+    width: "85%",
+    backgroundColor: "#FBCB0A",
+    borderRadius: 10,
   },
   buttonText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-  },
-  infoButton: {
-    backgroundColor: "#BA9D9F",
-  },
-  secondaryButton: {
-    backgroundColor: "#CA907E",
-  },
-  warningButton: {
-    backgroundColor: "#B6636E",
-    marginHorizontal: 10,
-    width: 150,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorButton: {
-    backgroundColor: "#9E2A2B",
-    width: 150,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  calculatorControls: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    fontSize: 30,
+    // textAlign: "center",
+    // textAlignVertical: "center",
   },
 });
