@@ -10,19 +10,24 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
             onPress={onClear}
             style={[styles.buttonLeftCol, styles.clear]}
           >
-            <Text style={styles.buttonText}>Clear History</Text>
+            <Text style={[styles.buttonText, { color: "white", fontSize: 18 }]}>
+              Clear History
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onDelete}
             style={[styles.buttonLeftCol, styles.delete]}
           >
-            <Text style={styles.buttonText}>Delete</Text>
+            <Text style={[styles.buttonText, { color: "white", fontSize: 18 }]}>
+              Del
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onButton("/")}
             style={[styles.buttonLeftCol, styles.operator]}
           >
             <Text style={styles.buttonText}>/</Text>
+            {/* <Text style={styles.buttonText}>➗</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onButton("1")}
@@ -90,28 +95,32 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
         </View>
         <View style={styles.rightColumn}>
           <TouchableOpacity
-            onPress={() => onButton("+")}
+            onPress={() => onButton("*")}
             style={[styles.buttonRightCol, styles.operator]}
           >
-            <Text style={styles.buttonText}>+</Text>
+            <Text style={styles.buttonText}>X</Text>
+            {/* <Text style={styles.buttonText}>✖️</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onButton("-")}
             style={[styles.buttonRightCol, styles.operator]}
           >
             <Text style={styles.buttonText}>-</Text>
+            {/* <Text style={styles.buttonText}>➖</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("*")}
+            onPress={() => onButton("+")}
             style={[styles.buttonRightCol, styles.operator]}
           >
-            <Text style={styles.buttonText}>*</Text>
+            <Text style={styles.buttonText}>+</Text>
+            {/* <Text style={styles.buttonText}>➕</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onButton("=")}
             style={styles.equalsButton}
           >
             <Text style={styles.buttonText}>=</Text>
+            {/* <Text style={styles.buttonText}>🟰</Text> */}
           </TouchableOpacity>
         </View>
       </View>
@@ -121,13 +130,13 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
 
 const styles = StyleSheet.create({
   btnContainer: {
-    backgroundColor: "#3EC70B",
-    aspectRatio: 1 / 1.25,
+    // backgroundColor: "#3EC70B",
+    aspectRatio: 1 / 1.15,
     width: "88%",
     flexDirection: "row",
   },
   leftColumn: {
-    backgroundColor: "#EE5007",
+    // backgroundColor: "#EE5007",
     width: "75%",
     flexDirection: "row",
     flexWrap: "wrap",
@@ -135,48 +144,55 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
   },
   rightColumn: {
-    backgroundColor: "#219F94",
+    // backgroundColor: "#219F94",
     width: "25%",
     justifyContent: "space-around",
     alignItems: "center",
   },
+  buttonText: {
+    color: "black",
+    fontSize: 30,
+    textAlign: "center",
+  },
   buttonLeftCol: {
     height: "17%",
     width: "28.3%",
-    backgroundColor: "orange",
+    backgroundColor: "#DBD8AE",
     borderRadius: 10,
+    flexDirection: "column",
+    justifyContent: "center",
   },
   buttonRightCol: {
     height: "17%",
     width: "85%",
     backgroundColor: "#FBCB0A",
     borderRadius: 10,
+    flexDirection: "column",
+    justifyContent: "center",
   },
-
   clear: {
-    backgroundColor: "red",
+    backgroundColor: "#9E2A2B",
   },
   delete: {
-    backgroundColor: "yellow",
+    backgroundColor: "#B6636E",
   },
   operator: {
-    backgroundColor: "#3EC70B",
+    backgroundColor: "#CA907E",
   },
   zero: {
     height: "17%",
     width: "61.6%",
-    backgroundColor: "#219F94",
+    backgroundColor: "#DBD8AE",
     borderRadius: 10,
+    flexDirection: "column",
+    justifyContent: "center",
   },
   equalsButton: {
     height: "37%",
     width: "85%",
-    backgroundColor: "#FBCB0A",
+    backgroundColor: "#BA9D9F",
     borderRadius: 10,
-  },
-  buttonText: {
-    fontSize: 30,
-    // textAlign: "center",
-    // textAlignVertical: "center",
+    flexDirection: "column",
+    justifyContent: "center",
   },
 });

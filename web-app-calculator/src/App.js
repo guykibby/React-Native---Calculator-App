@@ -9,10 +9,12 @@ function App() {
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
+  // the result state is redundant since it never changes value independently from the states operationDisplay and history
   const [result, setResult] = useState("");
-  // the state initiation value for history should draw from the local storage
+  // the value for history should draw from the local storage upon initiation
   const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
 
+  // the names of these theme colours are not semantically intuitive, ie secondary is not a good name for the colour of the operator buttons.
   const theme = createTheme({
     palette: {
       primary: {

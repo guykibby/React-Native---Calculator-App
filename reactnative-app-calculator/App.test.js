@@ -96,7 +96,7 @@ describe("<App/>", () => {
     const button1 = screen.getByText("1");
     const button9 = screen.getByText("9");
     const buttonDecimal = screen.getByText(".");
-    const buttonMultiply = screen.getByText("*");
+    const buttonMultiply = screen.getByText("X");
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
@@ -137,7 +137,7 @@ describe("<App/>", () => {
     });
     const button0 = screen.getByText("0");
     const button3 = screen.getByText("3");
-    const buttonMultiply = screen.getByText("*");
+    const buttonMultiply = screen.getByText("X");
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
@@ -231,7 +231,7 @@ describe("<App/>", () => {
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
     const operationDisplay = screen.getByTestId("display");
-    const pastCalculations = screen.getByText("Past Calculations");
+    const pastCalculations = screen.getByText("History");
 
     fireEvent.press(pastCalculations);
     fireEvent.press(buttonEquals);
@@ -288,7 +288,7 @@ describe("<App/>", () => {
     const buttonPlus = screen.getByText("+");
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
-    const pastCalculations = screen.getByText("Past Calculations");
+    const pastCalculations = screen.getByText("History");
 
     fireEvent.press(button3);
     fireEvent.press(buttonPlus);
@@ -296,7 +296,7 @@ describe("<App/>", () => {
     fireEvent.press(buttonEquals);
     fireEvent.press(pastCalculations);
 
-    expect(AsyncStorageMock.setItem.mock.calls[1]).toEqual([
+    expect(AsyncStorageMock.setItem.mock.calls[0]).toEqual([
       "pastCalculations",
       '["3 + 3 = 6"]',
     ]);
@@ -311,7 +311,7 @@ describe("<App/>", () => {
       const app = render(<App />);
     });
 
-    const pastCalculations = screen.getByText("Past Calculations");
+    const pastCalculations = screen.getByText("History");
 
     fireEvent.press(pastCalculations);
 
@@ -326,7 +326,7 @@ describe("<App/>", () => {
     const buttonPlus = screen.getByText("+");
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
-    const pastCalculations = screen.getByText("Past Calculations");
+    const pastCalculations = screen.getByText("History");
     const clearHistory = screen.getByText("Clear History");
 
     fireEvent.press(button3);
@@ -336,7 +336,7 @@ describe("<App/>", () => {
     fireEvent.press(pastCalculations);
     fireEvent.press(clearHistory);
 
-    expect(AsyncStorageMock.setItem.mock.calls[2]).toEqual([
+    expect(AsyncStorageMock.setItem.mock.calls[1]).toEqual([
       "pastCalculations",
       "[]",
     ]);
@@ -352,7 +352,7 @@ describe("<App/>", () => {
     const buttonPlus = screen.getByText("+");
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
-    const buttonDelete = screen.getByText("Delete");
+    const buttonDelete = screen.getByText("Del");
 
     fireEvent.press(button3);
     fireEvent.press(buttonPlus);
@@ -377,7 +377,7 @@ describe("<App/>", () => {
     const buttonPlus = screen.getByText("+");
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
-    const buttonDelete = screen.getByText("Delete");
+    const buttonDelete = screen.getByText("Del");
 
     fireEvent.press(button3);
     fireEvent.press(buttonPlus);
@@ -445,74 +445,4 @@ describe("<App/>", () => {
 
     expect(screen.getByTestId("display").props.children).toBe("0.");
   });
-
-  //   it("calculates Addition, Subtration, Multiplication & Division accurate to 2 decimal places", () => {
-  //     // arrange
-  //     const app = render(<App />);
-
-  //     // assert
-  //     expect(screen.getByPlaceholderText("Username")).toBeDefined();
-  //     expect(screen.getByPlaceholderText("Password")).toBeDefined();
-
-  //     expect(screen.getByPlaceholderText("Username")).toBeOnTheScreen();
-  //     expect(screen.getByPlaceholderText("Password")).toBeOnTheScreen();
-  //   });
-
-  //   it("should display the appropriate message when both the username, password are missing from the form", () => {
-  //     // arrange
-  //     const app = render(<LoginForm />);
-  //     expect(screen.getByText("Username and Password required.")).toBeDefined();
-  //     expect(screen.queryByText("Username required.")).toBeNull();
-  //     expect(screen.queryByText("Password required.")).toBeNull();
-  //   });
-
-  //   it("should display the appropriate message when just the username is missing from the form", () => {
-  //     const app = render(<LoginForm />);
-  //     fireEvent.changeText(screen.getByPlaceholderText("Password"), "boggle");
-  //     expect(screen.getByText("Username required.")).toBeDefined();
-  //     expect(screen.queryByText("Username and Password required.")).toBeNull();
-  //     expect(screen.queryByText("Password required.")).toBeNull();
-  //   });
-
-  //   it("should display the appropriate message when just the password is missing from the form", () => {
-  //     const app = render(<LoginForm />);
-  //     fireEvent.changeText(screen.getByPlaceholderText("Username"), "boggle");
-  //     expect(screen.getByText("Password required.")).toBeDefined();
-  //     expect(screen.queryByText("Username and Password required.")).toBeNull();
-  //     expect(screen.queryByText("Username required.")).toBeNull();
-  //   });
-
-  //   it("should disable the button when either the password or username are missing from the form", () => {
-  //     const app = render(<LoginForm />);
-
-  //     expect(
-  //       screen.getByTestId("loginButton").props.accessibilityState.disabled
-  //     ).toBe(true);
-  //   });
-
-  //   it("should ensable the button when the password and username are filled in", () => {
-  //     const app = render(<LoginForm />);
-  //     fireEvent.changeText(screen.getByPlaceholderText("Password"), "boggle");
-  //     fireEvent.changeText(screen.getByPlaceholderText("Username"), "boggle");
-
-  //     expect(
-  //       screen.getByTestId("loginButton").props.accessibilityState.disabled
-  //     ).toBe(false);
-  //   });
 });
-// Tests are not implemented.
-// const testInputs = [
-//   "",
-//   ".",
-//   "0.0",
-//   "0...",
-//   ".0",
-//   "0.",
-//   "12345.",
-//   "111/",
-//   "=",
-//   "/",
-//   "+",
-//   "-",
-//   "*",
-// ];
