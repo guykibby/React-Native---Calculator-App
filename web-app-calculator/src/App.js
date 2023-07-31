@@ -10,9 +10,10 @@ function App() {
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("");
-  // the state initiation value for history should draw from the local storage
+  // the value for history should draw from the local storage upon initiation
   const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
 
+  // the names of these theme colours are not semantically intuitive, ie secondary is not a good name for the colour of the operator buttons.
   const theme = createTheme({
     palette: {
       primary: {
@@ -92,7 +93,7 @@ function App() {
   const isSecondOperand = (char) => {
     return operator && !isOperator(char);
   };
-
+  // Should use "X" instead of "*" for rendering multiplication operator
   const isOperator = (char) => {
     return char === "+" || char === "-" || char === "*" || char === "/";
   };

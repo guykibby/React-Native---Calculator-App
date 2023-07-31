@@ -1,55 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   Collapse,
   CollapseHeader,
   CollapseBody,
 } from "accordion-collapse-react-native";
+import { ScrollView } from "react-native";
 
 const OperationDisplay = ({ d, h }) => {
-  console.log(h);
-  console.log(h.reverse());
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <View style={styles.container}>
-      <Text testID="display" style={styles.display}>
-        {d}
-      </Text>
-      <Collapse>
+    <View style={styles.window}>
+      <Collapse style={styles.collapse} onToggle={setIsOpen}>
         <CollapseHeader>
-          <View>
-            <Text>Past Calculations</Text>
+          <View
+            style={[styles.historyHeader, isOpen ? styles.continousHeader : {}]}
+          >
+            <Text style={styles.headerText}>History</Text>
+            <Text style={styles.headerText}>▼</Text>
           </View>
         </CollapseHeader>
-        <CollapseBody>
-          {h.map((item, index) => {
-            return (
-              <Text testID="history" key={index}>
-                {item}
-              </Text>
-            );
-          })}
+        <CollapseBody style={styles.collapseBody}>
+          <ScrollView>
+            {h.map((item, index) => {
+              return (
+                <Text style={styles.bodyText} testID="history" key={index}>
+                  {item}
+                </Text>
+              );
+            })}
+          </ScrollView>
         </CollapseBody>
       </Collapse>
+      <Text style={styles.display} testID="display">
+        {d}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  window: {
+    width: "85%",
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: 20,
+    marginTop: "6%",
+    justifyContent: "space-between",
   },
-  history: {
-    fontSize: 20,
-    color: "#888",
-    marginBottom: 10,
+  collapse: {
+    flex: 1,
+    overflow: "hidden",
+  },
+  historyHeader: {
+    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#BA9D9F",
+    padding: 10,
+  },
+  continousHeader: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomWidth: 1,
+  },
+  headerText: {
+    fontSize: 22,
+  },
+  collapseBody: {
+    flex: 1,
+    backgroundColor: "#BA9D9F",
+  },
+
+  bodyText: {
+    fontSize: 18,
+    textAlign: "center",
   },
   display: {
-    fontSize: 40,
-    color: "#333",
+    fontSize: 38,
+    textAlign: "right",
+    justifyContent: "center",
+    color: "white",
+    paddingHorizontal: "3%",
   },
 });
 

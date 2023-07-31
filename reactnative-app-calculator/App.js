@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
@@ -13,15 +13,25 @@ export default function App() {
   const [result, setResult] = useState("");
   const [history, setHistory] = useState([]);
 
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("pastCalculations");
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      return;
+    }
+  };
+
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("pastCalculations", jsonValue);
+    } catch (e) {
+      return;
+    }
+  };
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("pastCalculations");
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (e) {
-        return;
-      }
-    };
     getData().then((value) => {
       if (value) {
         setHistory(value);
@@ -30,73 +40,66 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const storeData = async (value) => {
-      try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("pastCalculations", jsonValue);
-      } catch (e) {
-        return;
-      }
-    };
-    storeData(history);
-  }, [history]);
+    let tempDisplay = `${firstOperand}${operator && " " + operator}${
+      secondOperand && " " + secondOperand
+    }${result && " = " + result}`;
 
-  useEffect(() => {
-    setOperationDisplay(
-      `${firstOperand}${operator && " " + operator}${
-        secondOperand && " " + secondOperand
-      }${result && " = " + result}`
-    );
+    if (result && tempDisplay.length > 28) {
+      setOperationDisplay("= " + result);
+    } else {
+      setOperationDisplay(tempDisplay);
+    }
   }, [firstOperand, secondOperand, operator, result]);
 
-  // Button Clicked needs to limit size of number inputs.
-  // calculateResult needs to handle extremelely large numbers (maybe minimise or throw error).
-
   const buttonClicked = (char) => {
-    // consider getting rid of else statement
     if (result) {
       clearStates(char);
-    } else {
-      if (!firstOperand) {
-        if (isNumber(char)) {
-          setFirstOperand(char);
-        }
-        if (char === ".") {
-          setFirstOperand("0.");
-        }
-      }
+      return;
+    }
 
-      if (firstOperand && !operator) {
+    if (!firstOperand) {
+      if (isNumber(char)) {
+        setFirstOperand(char);
+      }
+      if (char === ".") {
+        setFirstOperand("0.");
+      }
+    }
+
+    if (firstOperand && !operator) {
+      if (firstOperand.length < 10) {
         if (isNumber(char)) {
           setFirstOperand((previousValue) => previousValue + char);
-        }
-        if (isOperator(char)) {
-          setOperator(char);
         }
         if (char === "." && !firstOperand.includes(".")) {
           setFirstOperand((previousValue) => previousValue + char);
         }
       }
-
-      if (firstOperand && operator && !secondOperand) {
-        if (isNumber(char)) {
-          setSecondOperand(char);
-        }
-        if (char === ".") {
-          setSecondOperand("0.");
-        }
+      if (isOperator(char)) {
+        setOperator(char);
       }
+    }
 
-      if (firstOperand && operator && secondOperand) {
+    if (firstOperand && operator && !secondOperand) {
+      if (isNumber(char)) {
+        setSecondOperand(char);
+      }
+      if (char === ".") {
+        setSecondOperand("0.");
+      }
+    }
+
+    if (firstOperand && operator && secondOperand) {
+      if (secondOperand.length < 10) {
         if (isNumber(char)) {
           setSecondOperand((previousValue) => previousValue + char);
         }
         if (char === "." && !secondOperand.includes(".")) {
           setSecondOperand((previousValue) => previousValue + char);
         }
-        if (char === "=") {
-          calculateResult();
-        }
+      }
+      if (char === "=") {
+        calculateResult();
       }
     }
   };
@@ -114,7 +117,7 @@ export default function App() {
   };
 
   const isOperator = (char) => {
-    return char === "+" || char === "-" || char === "*" || char === "/";
+    return char === "+" || char === "-" || char === "x" || char === "/";
   };
 
   const isNumber = (str) => {
@@ -143,7 +146,7 @@ export default function App() {
       setResult("");
     }
   };
-  // 0 x 0 = NaN
+
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
@@ -152,7 +155,7 @@ export default function App() {
     if (operator === "-") {
       tempResult = Number(firstOperand) - Number(secondOperand);
     }
-    if (operator === "*") {
+    if (operator === "x") {
       tempResult = Number(firstOperand) * Number(secondOperand);
     }
     if (operator === "/") {
@@ -162,12 +165,13 @@ export default function App() {
       tempResult = Number(tempResult.toFixed(2));
     }
 
-    // get rid of = until it is required
-    // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
-    setHistory((previousValue) => [
+    const tempHistory = [
       `${firstOperand} ${operator} ${secondOperand} = ${tempResult}`,
-      ...previousValue,
-    ]);
+      ...history,
+    ];
+
+    setHistory(tempHistory);
+    storeData(tempHistory);
     setResult(tempResult.toString());
   };
 
@@ -179,26 +183,20 @@ export default function App() {
       <ButtonContainer
         onButton={buttonClicked}
         onDelete={deleteClicked}
-        onClear={() => setHistory([])}
+        onClear={() => {
+          setHistory([]);
+          storeData([]);
+        }}
       />
     </View>
   );
 }
 
-// UX Considerations:
-// Whenever you click a button you should see a feedback animation
-// "Thumb zone" is taken into consideration
-// The clear history button should be displayed after the input results display area
-// The calculator should be responsive to different screen sizes
-// The calculator should be accessible to screen readers
-
 const styles = StyleSheet.create({
   app: {
-    // backgroundColor: "#000",
-    backgroundColor: "white",
-    paddingHorizontal: "5%",
+    backgroundColor: "black",
     flex: 1,
-    justifyContent: "space-between",
     alignItems: "center",
+    borderWidth: 1,
   },
 });
