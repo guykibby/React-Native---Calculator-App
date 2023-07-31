@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
@@ -47,17 +47,17 @@ export default function App() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   storeData(history);
-  // }, [history]);
-
   // consider getting rid of result state as it is not required
   useEffect(() => {
-    setOperationDisplay(
-      `${firstOperand}${operator && " " + operator}${
-        secondOperand && " " + secondOperand
-      }${result && " = " + result}`
-    );
+    let tempDisplay = `${firstOperand}${operator && " " + operator}${
+      secondOperand && " " + secondOperand
+    }${result && " = " + result}`;
+
+    if (tempDisplay.length < 29) {
+      setOperationDisplay(tempDisplay);
+    } else {
+      setOperationDisplay("= " + result);
+    }
   }, [firstOperand, secondOperand, operator, result]);
 
   // Button Clicked needs to limit size of number inputs.
@@ -67,47 +67,52 @@ export default function App() {
     // consider getting rid of else statement
     if (result) {
       clearStates(char);
-    } else {
-      if (!firstOperand) {
-        if (isNumber(char)) {
-          setFirstOperand(char);
-        }
-        if (char === ".") {
-          setFirstOperand("0.");
-        }
-      }
+      return;
+    }
 
-      if (firstOperand && !operator) {
+    if (!firstOperand) {
+      if (isNumber(char)) {
+        setFirstOperand(char);
+      }
+      if (char === ".") {
+        setFirstOperand("0.");
+      }
+    }
+
+    if (firstOperand && !operator) {
+      if (firstOperand.length < 11) {
         if (isNumber(char)) {
           setFirstOperand((previousValue) => previousValue + char);
-        }
-        if (isOperator(char)) {
-          setOperator(char);
         }
         if (char === "." && !firstOperand.includes(".")) {
           setFirstOperand((previousValue) => previousValue + char);
         }
       }
-
-      if (firstOperand && operator && !secondOperand) {
-        if (isNumber(char)) {
-          setSecondOperand(char);
-        }
-        if (char === ".") {
-          setSecondOperand("0.");
-        }
+      if (isOperator(char)) {
+        setOperator(char);
       }
+    }
 
-      if (firstOperand && operator && secondOperand) {
+    if (firstOperand && operator && !secondOperand) {
+      if (isNumber(char)) {
+        setSecondOperand(char);
+      }
+      if (char === ".") {
+        setSecondOperand("0.");
+      }
+    }
+
+    if (firstOperand && operator && secondOperand) {
+      if (secondOperand.length < 11) {
         if (isNumber(char)) {
           setSecondOperand((previousValue) => previousValue + char);
         }
         if (char === "." && !secondOperand.includes(".")) {
           setSecondOperand((previousValue) => previousValue + char);
         }
-        if (char === "=") {
-          calculateResult();
-        }
+      }
+      if (char === "=") {
+        calculateResult();
       }
     }
   };
@@ -125,7 +130,7 @@ export default function App() {
   };
 
   const isOperator = (char) => {
-    return char === "+" || char === "-" || char === "*" || char === "/";
+    return char === "+" || char === "-" || char === "x" || char === "/";
   };
 
   const isNumber = (str) => {
@@ -163,7 +168,7 @@ export default function App() {
     if (operator === "-") {
       tempResult = Number(firstOperand) - Number(secondOperand);
     }
-    if (operator === "*") {
+    if (operator === "x") {
       tempResult = Number(firstOperand) * Number(secondOperand);
     }
     if (operator === "/") {

@@ -9,36 +9,9 @@ import App from "./App";
 import "@testing-library/jest-native/extend-expect";
 import AsyncStorageMock from "@react-native-async-storage/async-storage";
 
-// Unit tests to check that all ACs in Part C is working.
-// Unit test NOT needed for the DELETE button AC in Part C.
-// Unit tests that require local storage should use mocks.
-
-// The calculator will have the following 4 operations implemented being accurate to 2 decimal places:
-// Subtraction
-// Addition
-// Multiplication
-// Division
-// The output of the calculation should only show up to 2 decimal places.
-// Calculations can be performed on decimal numbers and 0.
-// Can only input one decimal point per number. (ie. Numbers such as 1.23.456 shouldn't be allowed)
-// The calculator can output negative numbers.
-// Calculations can only be performed on 2 numeric values (aka. operands) with one operator (addition, subtraction, multiplication or division).
-// Need to handle user input edge cases such as
-// Pressing equals before the first and second operands are entered
-// Pressing the operator before the first operand is entered
-// User changing their mind on which operator they wanted
-// GIVEN that I am a user and I have entered character(s) WHEN I press the DELETE button THEN the last character that I've entered should be deleted.
-// If the DELETE button is pressed after a calculation is completed then it should clear the entire display area. But the cleared calculation should still be saved to history.
-// GIVEN that I am a user and there is past calculations in the dropdown WHEN I press the CLEAR HISTORY button THEN all the past calculations are cleared from the dropdown as well as the local storage.
-
-// check clearstates functionality
-// check clearhistory functionality
-// check delete functionality
+//  consider tests for large numbers
 
 describe("<App/>", () => {
-  //   beforeEach(() => {
-  //     jest.clearAllMocks();
-  //   });
   afterEach(() => {
     cleanup();
     jest.resetAllMocks();

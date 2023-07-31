@@ -64,21 +64,22 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     borderBottomWidth: 1,
   },
+  headerText: {
+    fontSize: 20,
+    // fontWeight: "bold",
+  },
   collapseBody: {
     flex: 1,
     backgroundColor: "#BA9D9F",
     // borderRadius: 10,
   },
-  headerText: {
-    fontSize: 25,
-    // fontWeight: "bold",
-  },
+
   bodyText: {
-    fontSize: 22,
+    fontSize: 18,
     textAlign: "center",
   },
   display: {
-    fontSize: 60,
+    fontSize: 38,
     textAlign: "right",
     justifyContent: "center",
     color: "white",

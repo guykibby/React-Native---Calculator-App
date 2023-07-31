@@ -9,7 +9,6 @@ function App() {
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
-  // the result state is redundant since it never changes value independently from the states operationDisplay and history
   const [result, setResult] = useState("");
   // the value for history should draw from the local storage upon initiation
   const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
@@ -94,7 +93,7 @@ function App() {
   const isSecondOperand = (char) => {
     return operator && !isOperator(char);
   };
-
+  // Should use "X" instead of "*" for rendering multiplication operator
   const isOperator = (char) => {
     return char === "+" || char === "-" || char === "*" || char === "/";
   };

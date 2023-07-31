@@ -95,7 +95,7 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
         </View>
         <View style={styles.rightColumn}>
           <TouchableOpacity
-            onPress={() => onButton("*")}
+            onPress={() => onButton("x")}
             style={[styles.buttonRightCol, styles.operator]}
           >
             <Text style={styles.buttonText}>X</Text>
