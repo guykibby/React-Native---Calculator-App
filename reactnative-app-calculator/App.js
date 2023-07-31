@@ -4,14 +4,6 @@ import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
 import OperationDisplay from "./components/OperationDisplay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import * as Font from "expo-font";
-
-// const fetchFonts = () => {
-//   return Font.loadAsync({
-//     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-//     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
-//   });
-// };
 
 export default function App() {
   const [operationDisplay, setOperationDisplay] = useState("");
@@ -47,24 +39,19 @@ export default function App() {
     });
   }, []);
 
-  // consider getting rid of result state as it is not required
   useEffect(() => {
     let tempDisplay = `${firstOperand}${operator && " " + operator}${
       secondOperand && " " + secondOperand
     }${result && " = " + result}`;
 
-    if (tempDisplay.length < 29) {
-      setOperationDisplay(tempDisplay);
-    } else {
+    if (result && tempDisplay.length > 28) {
       setOperationDisplay("= " + result);
+    } else {
+      setOperationDisplay(tempDisplay);
     }
   }, [firstOperand, secondOperand, operator, result]);
 
-  // Button Clicked needs to limit size of number inputs.
-  // calculateResult needs to handle extremelely large numbers (maybe minimise or throw error).
-
   const buttonClicked = (char) => {
-    // consider getting rid of else statement
     if (result) {
       clearStates(char);
       return;
@@ -80,7 +67,7 @@ export default function App() {
     }
 
     if (firstOperand && !operator) {
-      if (firstOperand.length < 11) {
+      if (firstOperand.length < 10) {
         if (isNumber(char)) {
           setFirstOperand((previousValue) => previousValue + char);
         }
@@ -103,7 +90,7 @@ export default function App() {
     }
 
     if (firstOperand && operator && secondOperand) {
-      if (secondOperand.length < 11) {
+      if (secondOperand.length < 10) {
         if (isNumber(char)) {
           setSecondOperand((previousValue) => previousValue + char);
         }
@@ -159,7 +146,7 @@ export default function App() {
       setResult("");
     }
   };
-  // 0 / 0 = NaN
+
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
@@ -205,21 +192,11 @@ export default function App() {
   );
 }
 
-// UX Considerations:
-// Whenever you click a button you should see a feedback animation
-// "Thumb zone" is taken into consideration
-// The clear history button should be displayed after the input results display area
-// The calculator should be responsive to different screen sizes
-// The calculator should be accessible to screen readers
-
 const styles = StyleSheet.create({
   app: {
-    // fontFamily: "open-sans",
-    // backgroundColor: "#000",
     backgroundColor: "black",
-    // paddingHorizontal: "5%",
     flex: 1,
-    // justifyContent: "space-between",
     alignItems: "center",
+    borderWidth: 1,
   },
 });

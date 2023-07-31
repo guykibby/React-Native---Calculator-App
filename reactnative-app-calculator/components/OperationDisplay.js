@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#BA9D9F",
-    // borderRadius: 10,
     padding: 10,
   },
   continousHeader: {
@@ -65,13 +64,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   headerText: {
-    fontSize: 20,
-    // fontWeight: "bold",
+    fontSize: 22,
   },
   collapseBody: {
     flex: 1,
     backgroundColor: "#BA9D9F",
-    // borderRadius: 10,
   },
 
   bodyText: {

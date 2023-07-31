@@ -82,7 +82,7 @@ describe("<App/>", () => {
     fireEvent.press(button9);
     fireEvent.press(buttonEquals);
 
-    expect(screen.getByText("1.111 * 9 = 10")).toBeDefined();
+    expect(screen.getByText("1.111 x 9 = 10")).toBeDefined();
   });
 
   it("calculates division accurately to 2 decimal places", async () => {
@@ -119,7 +119,7 @@ describe("<App/>", () => {
     fireEvent.press(button3);
     fireEvent.press(buttonEquals);
 
-    expect(screen.getByText("0 * 3 = 0")).toBeDefined();
+    expect(screen.getByText("0 x 3 = 0")).toBeDefined();
   });
 
   it("can handle a decimal point input for first operand without any numbers before or after it", async () => {
@@ -227,7 +227,7 @@ describe("<App/>", () => {
     expect(operationDisplay.props.children).toBe("3 - 3 = 0");
     expect(screen.getByTestId("history").props.children).toBe("3 - 3 = 0");
   });
-  // needs work. ? check operation display text to have correct length
+
   it("operator only input to calculation if there is a first operand and no operator or second operand", async () => {
     await waitFor(async () => {
       const app = render(<App />);
