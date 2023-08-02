@@ -1,5 +1,6 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
+import styles from "./ButtonContainer.styles";
 
 export default function ButtonContainer({ onButton, onClear, onDelete }) {
   return (
@@ -7,7 +8,7 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
       <View style={styles.btnContainer}>
         <View style={styles.leftColumn}>
           <TouchableOpacity
-            onPress={onClear}
+            onPressIn={onClear}
             style={[styles.buttonLeftCol, styles.clear]}
           >
             <Text style={[styles.buttonText, { color: "white", fontSize: 18 }]}>
@@ -15,7 +16,7 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={onDelete}
+            onPressIn={onDelete}
             style={[styles.buttonLeftCol, styles.delete]}
           >
             <Text style={[styles.buttonText, { color: "white", fontSize: 18 }]}>
@@ -23,71 +24,70 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("/")}
+            onPressIn={() => onButton("/")}
             style={[styles.buttonLeftCol, styles.operator]}
           >
             <Text style={styles.buttonText}>/</Text>
-            {/* <Text style={styles.buttonText}>➗</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("1")}
+            onPressIn={() => onButton("1")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>1</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("2")}
+            onPressIn={() => onButton("2")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>2</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("3")}
+            onPressIn={() => onButton("3")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>3</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("4")}
+            onPressIn={() => onButton("4")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>4</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("5")}
+            onPressIn={() => onButton("5")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>5</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("6")}
+            onPressIn={() => onButton("6")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>6</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("7")}
+            onPressIn={() => onButton("7")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>7</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("8")}
+            onPressIn={() => onButton("8")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>8</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("9")}
+            onPressIn={() => onButton("9")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>9</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => onButton("0")} style={styles.zero}>
+          <TouchableOpacity onPressIn={() => onButton("0")} style={styles.zero}>
             <Text style={styles.buttonText}>0</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton(".")}
+            onPressIn={() => onButton(".")}
             style={styles.buttonLeftCol}
           >
             <Text style={styles.buttonText}>.</Text>
@@ -95,104 +95,31 @@ export default function ButtonContainer({ onButton, onClear, onDelete }) {
         </View>
         <View style={styles.rightColumn}>
           <TouchableOpacity
-            onPress={() => onButton("x")}
+            onPressIn={() => onButton("x")}
             style={[styles.buttonRightCol, styles.operator]}
           >
-            <Text style={styles.buttonText}>X</Text>
-            {/* <Text style={styles.buttonText}>✖️</Text> */}
+            <Text style={styles.buttonText}>x</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("-")}
+            onPressIn={() => onButton("-")}
             style={[styles.buttonRightCol, styles.operator]}
           >
             <Text style={styles.buttonText}>-</Text>
-            {/* <Text style={styles.buttonText}>➖</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("+")}
+            onPressIn={() => onButton("+")}
             style={[styles.buttonRightCol, styles.operator]}
           >
             <Text style={styles.buttonText}>+</Text>
-            {/* <Text style={styles.buttonText}>➕</Text> */}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onButton("=")}
+            onPressIn={() => onButton("=")}
             style={styles.equalsButton}
           >
             <Text style={styles.buttonText}>=</Text>
-            {/* <Text style={styles.buttonText}>🟰</Text> */}
           </TouchableOpacity>
         </View>
       </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  btnContainer: {
-    // backgroundColor: "#3EC70B",
-    aspectRatio: 1 / 1.15,
-    width: "88%",
-    flexDirection: "row",
-  },
-  leftColumn: {
-    // backgroundColor: "#EE5007",
-    width: "75%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    alignContent: "space-around",
-  },
-  rightColumn: {
-    // backgroundColor: "#219F94",
-    width: "25%",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "black",
-    fontSize: 30,
-    textAlign: "center",
-  },
-  buttonLeftCol: {
-    height: "17%",
-    width: "28.3%",
-    backgroundColor: "#DBD8AE",
-    borderRadius: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  buttonRightCol: {
-    height: "17%",
-    width: "85%",
-    backgroundColor: "#FBCB0A",
-    borderRadius: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  clear: {
-    backgroundColor: "#9E2A2B",
-  },
-  delete: {
-    backgroundColor: "#B6636E",
-  },
-  operator: {
-    backgroundColor: "#CA907E",
-  },
-  zero: {
-    height: "17%",
-    width: "61.6%",
-    backgroundColor: "#DBD8AE",
-    borderRadius: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  equalsButton: {
-    height: "37%",
-    width: "85%",
-    backgroundColor: "#BA9D9F",
-    borderRadius: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-});

@@ -6,7 +6,7 @@ import OperationDisplay from "./components/OperationDisplay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
-  const [operationDisplay, setOperationDisplay] = useState("");
+  const [displayText, setdisplayText] = useState("");
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
@@ -40,15 +40,19 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    let tempDisplay = `${firstOperand}${operator && " " + operator}${
-      secondOperand && " " + secondOperand
-    }${result && " = " + result}`;
+    const updateDisplayText = () => {
+      let tempDisplay = `${firstOperand}${operator && " " + operator}${
+        secondOperand && " " + secondOperand
+      }${result && " = " + result}`;
 
-    if (result && tempDisplay.length > 28) {
-      setOperationDisplay("= " + result);
-    } else {
-      setOperationDisplay(tempDisplay);
-    }
+      if (result && tempDisplay.length > 28) {
+        setdisplayText("= " + result);
+      } else {
+        setdisplayText(tempDisplay);
+      }
+    };
+
+    updateDisplayText();
   }, [firstOperand, secondOperand, operator, result]);
 
   const buttonClicked = (char) => {
@@ -64,6 +68,7 @@ export default function App() {
       if (char === ".") {
         setFirstOperand("0.");
       }
+      return;
     }
 
     if (firstOperand && !operator) {
@@ -78,6 +83,7 @@ export default function App() {
       if (isOperator(char)) {
         setOperator(char);
       }
+      return;
     }
 
     if (firstOperand && operator && !secondOperand) {
@@ -87,6 +93,7 @@ export default function App() {
       if (char === ".") {
         setSecondOperand("0.");
       }
+      return;
     }
 
     if (firstOperand && operator && secondOperand) {
@@ -125,42 +132,38 @@ export default function App() {
   };
 
   const clearStates = (char) => {
-    if (char !== "=") {
-      if (isNumber(char)) {
-        setFirstOperand(char);
-        setOperator("");
-      }
-      if (isOperator(char)) {
-        setFirstOperand(result);
-        setOperator(char);
-      }
-      if (char === ".") {
-        setFirstOperand("0.");
-        setOperator("");
-      }
-      if (!char) {
-        setFirstOperand("");
-        setOperator("");
-      }
-      setSecondOperand("");
-      setResult("");
+    if (char === "=") {
+      return;
     }
+    if (isNumber(char)) {
+      setFirstOperand(char);
+      setOperator("");
+    } else if (isOperator(char)) {
+      setFirstOperand(result);
+      setOperator(char);
+    } else if (char === ".") {
+      setFirstOperand("0.");
+      setOperator("");
+    } else {
+      setFirstOperand("");
+      setOperator("");
+    }
+    setSecondOperand("");
+    setResult("");
   };
 
   const calculateResult = () => {
     let tempResult = null;
     if (operator === "+") {
       tempResult = Number(firstOperand) + Number(secondOperand);
-    }
-    if (operator === "-") {
+    } else if (operator === "-") {
       tempResult = Number(firstOperand) - Number(secondOperand);
-    }
-    if (operator === "x") {
+    } else if (operator === "x") {
       tempResult = Number(firstOperand) * Number(secondOperand);
-    }
-    if (operator === "/") {
+    } else if (operator === "/") {
       tempResult = Number(firstOperand) / Number(secondOperand);
     }
+
     if (!Number.isInteger(tempResult)) {
       tempResult = Number(tempResult.toFixed(2));
     }
@@ -178,8 +181,7 @@ export default function App() {
   return (
     <View style={styles.app}>
       <StatusBar style="auto" />
-      {/* The variable names d and h are not semantically intuitive*/}
-      <OperationDisplay d={operationDisplay} h={history} />
+      <OperationDisplay displayText={displayText} history={history} />
       <ButtonContainer
         onButton={buttonClicked}
         onDelete={deleteClicked}
