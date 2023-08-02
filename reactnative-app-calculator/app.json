@@ -21,12 +21,18 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.guykibby.reactnativeappcalculator"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "sdkVersion": "48.0.0"
+    "sdkVersion": "48.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "1beb4303-e4ee-457a-9d15-4bd6437b7921"
+      }
+    }
   },
   "name": "reactnative-app-calculator"
 }

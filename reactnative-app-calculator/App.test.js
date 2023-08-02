@@ -9,8 +9,6 @@ import App from "./App";
 import "@testing-library/jest-native/extend-expect";
 import AsyncStorageMock from "@react-native-async-storage/async-storage";
 
-//  consider tests for large numbers
-
 describe("<App/>", () => {
   afterEach(() => {
     cleanup();
@@ -28,14 +26,14 @@ describe("<App/>", () => {
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button1);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(button1);
-    fireEvent.press(button1);
-    fireEvent.press(button9);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button1);
-    fireEvent.press(buttonEquals);
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(button9, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("1.119 + 1 = 2.12")).toBeDefined();
   });
@@ -50,14 +48,14 @@ describe("<App/>", () => {
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button1);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(button1);
-    fireEvent.press(button1);
-    fireEvent.press(button1);
-    fireEvent.press(buttonMinus);
-    fireEvent.press(button1);
-    fireEvent.press(buttonEquals);
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonMinus, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("1.111 - 1 = 0.11")).toBeDefined();
   });
@@ -69,18 +67,18 @@ describe("<App/>", () => {
     const button1 = screen.getByText("1");
     const button9 = screen.getByText("9");
     const buttonDecimal = screen.getByText(".");
-    const buttonMultiply = screen.getByText("X");
+    const buttonMultiply = screen.getByText("x");
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button1);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(button1);
-    fireEvent.press(button1);
-    fireEvent.press(button1);
-    fireEvent.press(buttonMultiply);
-    fireEvent.press(button9);
-    fireEvent.press(buttonEquals);
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonMultiply, "pressIn");
+    fireEvent(button9, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("1.111 x 9 = 10")).toBeDefined();
   });
@@ -95,11 +93,11 @@ describe("<App/>", () => {
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button1);
-    fireEvent.press(button1);
-    fireEvent.press(buttonDivide);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
+    fireEvent(button1, "pressIn");
+    fireEvent(button1, "pressIn");
+    fireEvent(buttonDivide, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("11 / 3 = 3.67")).toBeDefined();
   });
@@ -110,14 +108,14 @@ describe("<App/>", () => {
     });
     const button0 = screen.getByText("0");
     const button3 = screen.getByText("3");
-    const buttonMultiply = screen.getByText("X");
+    const buttonMultiply = screen.getByText("x");
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button0);
-    fireEvent.press(buttonMultiply);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
+    fireEvent(button0, "pressIn");
+    fireEvent(buttonMultiply, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("0 x 3 = 0")).toBeDefined();
   });
@@ -132,10 +130,10 @@ describe("<App/>", () => {
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("0. + 3 = 3")).toBeDefined();
   });
@@ -150,15 +148,13 @@ describe("<App/>", () => {
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(buttonEquals);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("3 + 0. = 3")).toBeDefined();
   });
-
-  //   ?check decimals for second operand
   it("Can only input one decimal point per number", async () => {
     await waitFor(async () => {
       const app = render(<App />);
@@ -166,13 +162,13 @@ describe("<App/>", () => {
     const buttonDecimal = screen.getByText(".");
     const button3 = screen.getByText("3");
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(button3);
-    fireEvent.press(buttonDecimal);
-    fireEvent.press(button3);
-    fireEvent.press(button3);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(button3, "pressIn");
 
     expect(screen.getByText("3.333")).toBeDefined();
   });
@@ -187,14 +183,14 @@ describe("<App/>", () => {
     const buttonEqualsArray = screen.queryAllByText("=");
     const buttonEquals = buttonEqualsArray[0];
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonMinus);
-    fireEvent.press(button9);
-    fireEvent.press(buttonEquals);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonMinus, "pressIn");
+    fireEvent(button9, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByText("3 - 9 = -6")).toBeDefined();
   });
-  // Needs work
+
   it("Equals button requires both operands and operator before functioning", async () => {
     await waitFor(async () => {
       const app = render(<App />);
@@ -206,24 +202,24 @@ describe("<App/>", () => {
     const operationDisplay = screen.getByTestId("display");
     const pastCalculations = screen.getByText("History");
 
-    fireEvent.press(pastCalculations);
-    fireEvent.press(buttonEquals);
+    fireEvent(pastCalculations, "press");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(operationDisplay.props.children).toBe("");
     expect(screen.queryByTestId("history")).toBeNull();
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
     expect(operationDisplay.props.children).toBe("3");
     expect(screen.queryByTestId("history")).toBeNull();
 
-    fireEvent.press(buttonMinus);
-    fireEvent.press(buttonEquals);
+    fireEvent(buttonMinus, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
     expect(operationDisplay.props.children).toBe("3 -");
     expect(screen.queryByTestId("history")).toBeNull();
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
     expect(operationDisplay.props.children).toBe("3 - 3 = 0");
     expect(screen.getByTestId("history").props.children).toBe("3 - 3 = 0");
   });
@@ -237,18 +233,18 @@ describe("<App/>", () => {
     const buttonPlus = screen.getByText("+");
     const operationDisplay = screen.getByTestId("display");
 
-    fireEvent.press(buttonMinus);
+    fireEvent(buttonMinus, "pressIn");
 
     expect(operationDisplay.props.children).toBe("");
 
-    fireEvent.press(button3);
+    fireEvent(button3, "pressIn");
     expect(operationDisplay.props.children).toBe("3");
 
-    fireEvent.press(buttonMinus);
+    fireEvent(buttonMinus, "pressIn");
     expect(operationDisplay.props.children).toBe("3 -");
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
 
     expect(operationDisplay.props.children).toBe("3 - 3");
   });
@@ -263,11 +259,11 @@ describe("<App/>", () => {
     const buttonEquals = EqualsArray[0];
     const pastCalculations = screen.getByText("History");
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
-    fireEvent.press(pastCalculations);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
+    fireEvent(pastCalculations, "press");
 
     expect(AsyncStorageMock.setItem.mock.calls[0]).toEqual([
       "pastCalculations",
@@ -286,7 +282,7 @@ describe("<App/>", () => {
 
     const pastCalculations = screen.getByText("History");
 
-    fireEvent.press(pastCalculations);
+    fireEvent(pastCalculations, "press");
 
     expect(screen.getByText("1 + 1 = 2")).toBeDefined();
   });
@@ -302,12 +298,12 @@ describe("<App/>", () => {
     const pastCalculations = screen.getByText("History");
     const clearHistory = screen.getByText("Clear History");
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
-    fireEvent.press(pastCalculations);
-    fireEvent.press(clearHistory);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
+    fireEvent(pastCalculations, "pressIn");
+    fireEvent(clearHistory, "pressIn");
 
     expect(AsyncStorageMock.setItem.mock.calls[1]).toEqual([
       "pastCalculations",
@@ -327,21 +323,22 @@ describe("<App/>", () => {
     const buttonEquals = EqualsArray[0];
     const buttonDelete = screen.getByText("Del");
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonDelete);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonDelete, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("3 +");
 
-    fireEvent.press(buttonDelete);
+    fireEvent(buttonDelete, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("3");
 
-    fireEvent.press(buttonDelete);
+    fireEvent(buttonDelete, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("");
   });
+
   it("delete button clears display after result is calculated", async () => {
     await waitFor(async () => {
       const app = render(<App />);
@@ -352,17 +349,18 @@ describe("<App/>", () => {
     const buttonEquals = EqualsArray[0];
     const buttonDelete = screen.getByText("Del");
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("3 + 3 = 6");
 
-    fireEvent.press(buttonDelete);
+    fireEvent(buttonDelete, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("");
   });
+
   it("Once result is calculated operator button clears display and input result as first operand followed by new operator", async () => {
     await waitFor(async () => {
       const app = render(<App />);
@@ -372,11 +370,11 @@ describe("<App/>", () => {
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
-    fireEvent.press(buttonPlus);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("6 +");
   });
@@ -391,11 +389,11 @@ describe("<App/>", () => {
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
-    fireEvent.press(button6);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
+    fireEvent(button6, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("6");
   });
@@ -410,11 +408,11 @@ describe("<App/>", () => {
     const EqualsArray = screen.queryAllByText("=");
     const buttonEquals = EqualsArray[0];
 
-    fireEvent.press(button3);
-    fireEvent.press(buttonPlus);
-    fireEvent.press(button3);
-    fireEvent.press(buttonEquals);
-    fireEvent.press(buttonDecimal);
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonPlus, "pressIn");
+    fireEvent(button3, "pressIn");
+    fireEvent(buttonEquals, "pressIn");
+    fireEvent(buttonDecimal, "pressIn");
 
     expect(screen.getByTestId("display").props.children).toBe("0.");
   });
