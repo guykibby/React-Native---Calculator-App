@@ -113,7 +113,7 @@ function App() {
     setResult(Number(firstOperand) + Number(secondOperand));
     clearStates();
   };
-  // This use effect should be below the state decleration for readability
+  // This use effect should be below the state declaration for readability
   useEffect(() => {
     // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
 

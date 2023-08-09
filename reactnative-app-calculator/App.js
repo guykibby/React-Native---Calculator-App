@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import ButtonContainer from "./components/ButtonContainer";
 import OperationDisplay from "./components/OperationDisplay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const [displayText, setdisplayText] = useState("");
@@ -178,19 +179,23 @@ export default function App() {
     setResult(tempResult.toString());
   };
 
+  // <StatusBar style="auto" />
   return (
-    <View style={styles.app}>
-      <StatusBar style="auto" />
-      <OperationDisplay displayText={displayText} history={history} />
-      <ButtonContainer
-        onButton={buttonClicked}
-        onDelete={deleteClicked}
-        onClear={() => {
-          setHistory([]);
-          storeData([]);
-        }}
-      />
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.app}>
+          <OperationDisplay displayText={displayText} history={history} />
+          <ButtonContainer
+            onButton={buttonClicked}
+            onDelete={deleteClicked}
+            onClear={() => {
+              setHistory([]);
+              storeData([]);
+            }}
+          />
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
