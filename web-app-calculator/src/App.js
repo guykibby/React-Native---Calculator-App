@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  // The names of this state 'operationDisplay' is also the same as the component OperationDisplay.
+  // Whilst this state is passed to the OperationDisplay, the 'history' state is as well.
+  // This could confuse a developer who is not familiar with the codebase.
   const [operationDisplay, setOperationDisplay] = useState("");
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
@@ -13,7 +16,9 @@ function App() {
   // the value for history should draw from the local storage upon initiation
   const [history, setHistory] = useState(["1 + 1 = 2", "2 * 2 = 4"]);
 
-  // the names of these theme colours are not semantically intuitive, ie secondary is not a good name for the colour of the operator buttons.
+  // the names of these theme colours are not semantically intuitive:
+  // Secondary is not a good name for the colour of the operator buttons,
+  // nor warning for the delete button, nor info for the equals button etc.
   const theme = createTheme({
     palette: {
       primary: {
@@ -34,36 +39,17 @@ function App() {
     },
   });
 
+  // Missing functionality:
   // There is currently no function to handle the delete button clicks.
   // The delete button should clear the most recent input
   // If the DELETE button is pressed after a calculation is completed then it should clear the entire display area.
   // But the cleared calculation should still be saved to history
   // consider this edge case: User changing their mind on which operator they wanted to use.
-
   // There is currently no function to store history in local storage.
   // The clear history button should clear the history from local storage.
-
   // There is no code to round the result to 2 decimal places.
-
-  // . + . = NaN
-  // There is no code to handle the case where the user inputs a decimal point without any numbers before or after it.
-  // There is no code to handle the case where the user inputs a decimal point without any numbers after it.
-  // There is no code to handle the case where the user inputs a decimal point without any numbers before it.
-  // There is no code to handle the case where the user inputs multiple decimal points.
-
   // Button Clicked needs to limit size of number inputs.
-  // calculateResult needs to handle extremelely large numbers.
-
-  // ?The calculator can not display negative results, or is it only becuase of + operation?
-
-  // Tests are not implemented.
-
-  // UX Considerations:
-  // Whenever you click a button you should see a feedback animation
-  // "Thumb zone" is taken into consideration
-  // The clear history button should be displayed after the input results display area
-  // The calculator should be responsive to different screen sizes
-  // The calculator should be accessible to screen readers
+  // There are no tests
 
   // buttonClicked function needs to be able to handle the following:
   // 1. If "=" is pushed before all operands or operators are input, it should do nothing.
@@ -71,11 +57,12 @@ function App() {
   // 3. If an operator is pushed after the first operand is input, it should set the operator state and move to the second operand.
   // 4. If an operator is pushed after the second operand is input, it should do nothing.
   // 5. After the calculation is complete if the user inputs additional numbers the previous calculation is saved to history and the new input is shown in the display area.
+  // 6. The user should not be able to input more than one decimal point per operand.
   const buttonClicked = (char) => {
     if (isFirstOperand(char)) {
       setFirstOperand((previousValue) => previousValue + char);
     } else if (isSecondOperand(char)) {
-      // Not an intuitive location for calculateResult function.
+      // Not an intuitive location for calculateResult function. Hard to read.
       if (char === "=") {
         calculateResult();
       } else {
@@ -86,14 +73,22 @@ function App() {
     }
   };
 
+  // Checking these conditions should be done in the buttonClicked function since they are not recycled nor are they complicated.
+  // What if the person pushes equals? equals should not be recognised as an operand
+  // Whist the name is descriptive, isolating these condition checks to a separate function makes it harder to read,
+  // since there are many other conditions other than these that need to be considered in buttonClicked other than these
   const isFirstOperand = (char) => {
     return !operator && !isOperator(char);
   };
 
+  // Checking these conditions should be done in the buttonClicked function since they are not recycled nor are they complicated.
+  // What if the person pushes equals? equals should not be recognised as an operand
+  // Whist the name is descriptive, isolating these condition checks to a separate function makes it harder to read,
+  // since there are many other conditions other than these that need to be considered in buttonClicked other than these
   const isSecondOperand = (char) => {
     return operator && !isOperator(char);
   };
-  // Should use "X" instead of "*" for rendering multiplication operator
+
   const isOperator = (char) => {
     return char === "+" || char === "-" || char === "*" || char === "/";
   };
@@ -115,7 +110,7 @@ function App() {
   };
   // This use effect should be below the state declaration for readability
   useEffect(() => {
-    // Consider getting rid of empty spaces between inputs until the user types them in. eg "3 =" will be displayed instead of "3  ="
+    // Consider getting rid of empty spaces and "=" until requires. eg if the user inputs a 3 then "3" will be displayed instead of "3  ="
 
     setOperationDisplay(
       `${firstOperand} ${operator} ${secondOperand} = ${result}`
@@ -127,7 +122,6 @@ function App() {
       <div className="App">
         <ButtonContainer
           onButton={buttonClicked}
-          // the clear history button should be in the OperationDisplay component.
           onClear={() => setHistory([])}
         ></ButtonContainer>
         {/* The variable names d and h are not semantically intuitive*/}

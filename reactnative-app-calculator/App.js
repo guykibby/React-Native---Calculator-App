@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
-  const [displayText, setdisplayText] = useState("");
+  const [displayText, setDisplayText] = useState("");
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
   const [operator, setOperator] = useState("");
@@ -47,9 +47,9 @@ export default function App() {
       }${result && " = " + result}`;
 
       if (result && tempDisplay.length > 28) {
-        setdisplayText("= " + result);
+        setDisplayText("= " + result);
       } else {
-        setdisplayText(tempDisplay);
+        setDisplayText(tempDisplay);
       }
     };
 
@@ -179,11 +179,11 @@ export default function App() {
     setResult(tempResult.toString());
   };
 
-  // <StatusBar style="auto" />
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.app}>
+          <StatusBar style="light" backgroundColor="black" />
           <OperationDisplay displayText={displayText} history={history} />
           <ButtonContainer
             onButton={buttonClicked}
