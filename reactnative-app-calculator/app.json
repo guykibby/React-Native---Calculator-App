@@ -32,6 +32,12 @@
       "eas": {
         "projectId": "1beb4303-e4ee-457a-9d15-4bd6437b7921"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1beb4303-e4ee-457a-9d15-4bd6437b7921"
     }
   },
   "name": "reactnative-app-calculator"

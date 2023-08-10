@@ -63,6 +63,7 @@ export default function ButtonContainer({ onButton, onClear }) {
         >
           <Button onClick={() => onButton("+")}>+</Button>
           <Button onClick={() => onButton("-")}>-</Button>
+          {/* Should use "x" instead of "*" for rendering the multiplication operator */}
           <Button onClick={() => onButton("*")}>*</Button>
           <Button onClick={() => onButton("/")}>/</Button>
         </ButtonGroup>
