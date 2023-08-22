@@ -8,6 +8,9 @@ import {
 import App from "./App";
 import "@testing-library/jest-native/extend-expect";
 import AsyncStorageMock from "@react-native-async-storage/async-storage";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
+jest.mock("react-native-safe-area-context");
 
 describe("<App/>", () => {
   afterEach(() => {
